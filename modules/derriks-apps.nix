@@ -1,0 +1,52 @@
+{ config, pkgs, ... }: 
+
+{
+  # Add packages to the system environment
+  environment.systemPackages = with pkgs; [
+    bitwarden-desktop
+    git
+    python312
+    btrfs-progs
+    appimage-run
+    papirus-icon-theme
+    libreoffice-qt
+    spotify
+    tailscale
+    vlc
+    gimp
+    wget
+    zettlr
+    winetricks
+    wine-staging
+    pavucontrol
+    distrobox
+    geany
+    thunderbird
+    ntfs3g
+    appimage-run
+    #firefox
+    flatpak
+    discord
+    kopia
+    telegram-desktop
+    screen
+    nodejs
+    pipx
+    ncdu
+    python311Packages.pip
+    caffeine-ng
+    php
+    adapta-gtk-theme
+    mlocate
+    yt-dlp
+    pamixer
+    gthumb
+    unzip
+    lxrandr
+    pinta
+    virt-manager
+    pantheon-tweaks
+    gh
+    lazygit
+  ];
+}
