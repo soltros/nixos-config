@@ -30,7 +30,7 @@
           ./modules/unsecure-packages.nix
           ./modules/ssh-server.nix
           ./modules/virtualization-support.nix
-          ./hardware-configuration.nix
+          /etc/nixos/hardware-configuration.nix
           ({ config, pkgs, ... }: {
             nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

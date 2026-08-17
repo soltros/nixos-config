@@ -11,12 +11,6 @@ HOST=$(awk -F'"' '/hostname =/ {print $2}' "$FLAKE_DIR/flake.nix")
 
 cd "$FLAKE_DIR"
 
-# Use the current machine's hardware config if available
-if [ -f "/etc/nixos/hardware-configuration.nix" ]; then
-    echo "Syncing /etc/nixos/hardware-configuration.nix into repo..."
-    cp /etc/nixos/hardware-configuration.nix "$FLAKE_DIR/hardware-configuration.nix"
-fi
-
 # Initialize git if it's not already initialized.
 # Flakes require files to be tracked by git if a .git folder exists,
 # so we ensure it's set up and tracking our files properly.
