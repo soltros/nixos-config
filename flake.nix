@@ -30,7 +30,7 @@
           ./modules/unsecure-packages.nix
           ./modules/ssh-server.nix
           ./modules/virtualization-support.nix
-          /etc/nixos/hardware-configuration.nix
+          ./hardware-configuration.nix
           ({ config, pkgs, ... }: {
             nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -130,9 +130,9 @@
             programs.zsh = {
               enable = true;
               shellAliases = {
-                nrb = "sudo nixos-rebuild switch --flake /home/derrik/nixos-config --impure";
-                nrb-test = "sudo nixos-rebuild test --flake /home/derrik/nixos-config --impure";
-                nrb-boot = "sudo nixos-rebuild boot --flake /home/derrik/nixos-config --impure";
+                nrb = "sudo nixos-rebuild switch --flake /home/derrik/nixos-config";
+                nrb-test = "sudo nixos-rebuild test --flake /home/derrik/nixos-config";
+                nrb-boot = "sudo nixos-rebuild boot --flake /home/derrik/nixos-config";
                 nfu = "nix flake update --flake /home/derrik/nixos-config";
                 nfu-rebuild = "cd /home/derrik/nixos-config && sudo ./deploy.sh";
                 ngc = "nix-collect-garbage -d";
