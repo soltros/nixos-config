@@ -22,6 +22,7 @@
         modules = [
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
+          ./modules/intelgpu.nix
           ./modules/derriks-apps.nix
           ./modules/gamemode.nix
           ./modules/steam.nix
@@ -61,8 +62,9 @@
             # Enable the X11 windowing system.
             services.xserver.enable = true;
 
-            # Enable custom AMD GPU module
-            hardware.amd.enable = true;
+            # Conditional GPU configuration by hostname
+            hardware.amd.enable = (hostname == "b450m-d3sh");
+            hardware.intel.enable = (hostname == "13-1315u");
 
             # Enable the Pantheon Desktop Environment.
             services.xserver.displayManager.lightdm.enable = true;
