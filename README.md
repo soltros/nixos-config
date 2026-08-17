@@ -40,18 +40,53 @@ Both GPU modules are included in the flake, but only the matching one is enabled
 - Flatpak support
 - CUPS printing support
 
-## Included Software
+## System Packages
 
-- Firefox
-- Google Antigravity IDE
-- Google Antigravity CLI
-- Steam with 32-bit dependencies
-- Gamemode
-- Tailscale
-- Virtualization support via libvirt
-- OpenSSH server
-- ZSH with Oh My Zsh
-- Starship prompt
+Installed via `derriks-apps.nix`:
+
+- bitwarden-desktop
+- git
+- python312
+- btrfs-progs
+- appimage-run
+- papirus-icon-theme
+- libreoffice-qt
+- spotify
+- tailscale
+- vlc
+- gimp
+- wget
+- zettlr
+- winetricks
+- wine-staging
+- pavucontrol
+- distrobox
+- geany
+- thunderbird
+- ntfs3g
+- flatpak
+- discord
+- kopia
+- telegram-desktop
+- screen
+- nodejs
+- pipx
+- ncdu
+- python311Packages.pip
+- caffeine-ng
+- php
+- adapta-gtk-theme
+- mlocate
+- yt-dlp
+- pamixer
+- gthumb
+- unzip
+- lxrandr
+- pinta
+- virt-manager
+- pantheon-tweaks
+- gh
+- lazygit
 
 ## Shell and Prompt
 
