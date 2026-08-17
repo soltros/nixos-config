@@ -81,6 +81,16 @@
               '';
             };
 
+            systemd.user.services.set-icon-theme = {
+              description = "Set Pantheon icon theme";
+              wantedBy = [ "graphical-session.target" ];
+              serviceConfig.Type = "oneshot";
+              serviceConfig.RemainAfterExit = true;
+              script = ''
+                /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/icon-theme "'"'"'Papirus-Dark'"'"'"
+              '';
+            };
+
             # Enable Flatpak support
             services.flatpak.enable = true;
 
@@ -164,6 +174,7 @@
               antigravity-nix.packages.x86_64-linux.default
               antigravity-nix.packages.x86_64-linux.google-antigravity-ide
               antigravity-nix.packages.x86_64-linux.google-antigravity-cli
+              papirus-icon-theme
             ];
 
             # Disable package documentation builds to bypass known unstable python3.12-doc bugs
