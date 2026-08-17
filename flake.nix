@@ -87,7 +87,7 @@
               serviceConfig.Type = "oneshot";
               serviceConfig.RemainAfterExit = true;
               script = ''
-                /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/icon-theme "'"'"'Papirus-Dark'"'"'"
+                /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/icon-theme "'Papirus-Dark'"
               '';
             };
 
