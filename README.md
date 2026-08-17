@@ -98,9 +98,9 @@ Installed via `derriks-apps.nix`:
 
 These are injected system-wide for the `derrik` user:
 
-- `nrb`: run `sudo nixos-rebuild switch --flake /home/derrik/nixos-config .#$(hostname)`
-- `nrb-test`: run `sudo nixos-rebuild test --flake /home/derrik/nixos-config .#$(hostname)`
-- `nrb-boot`: run `sudo nixos-rebuild boot --flake /home/derrik/nixos-config .#$(hostname)`
+- `nrb`: run `sudo nixos-rebuild switch --flake /home/derrik/nixos-config#$(hostname)`
+- `nrb-test`: run `sudo nixos-rebuild test --flake /home/derrik/nixos-config#$(hostname)`
+- `nrb-boot`: run `sudo nixos-rebuild boot --flake /home/derrik/nixos-config#$(hostname)`
 - `nfu`: run `nix flake update --flake /home/derrik/nixos-config`
 - `nfu-rebuild`: change to the flake directory, update the flake, then rebuild the system using the hostname detected from `flake.nix`
 - `ngc`: run `nix-collect-garbage -d`
