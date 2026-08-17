@@ -8,7 +8,7 @@ NixOS system configuration managed as a flake, designed for deployment across mu
 - `flake.lock`: locked dependency versions
 - `deploy.sh`: deployment script for applying the configuration
 - `modules/`: modular configuration fragments
-- `hardware-configuration.nix`: excluded from repo; sourced directly from `/etc/nixos/hardware-configuration.nix` on each machine
+- `hardware-configuration.nix`: tracked in repo and overwritten by `deploy.sh` from `/etc/nixos/hardware-configuration.nix` on each machine
 
 ## Modules
 
@@ -98,9 +98,9 @@ Installed via `derriks-apps.nix`:
 
 These are injected system-wide for the `derrik` user:
 
-- `nrb`: run `sudo nixos-rebuild switch --flake /home/derrik/nixos-config`
-- `nrb-test`: run `sudo nixos-rebuild test --flake /home/derrik/nixos-config`
-- `nrb-boot`: run `sudo nixos-rebuild boot --flake /home/derrik/nixos-config`
+- `nrb`: run `sudo nixos-rebuild switch --flake /home/derrik/nixos-config .#$(hostname)`
+- `nrb-test`: run `sudo nixos-rebuild test --flake /home/derrik/nixos-config .#$(hostname)`
+- `nrb-boot`: run `sudo nixos-rebuild boot --flake /home/derrik/nixos-config .#$(hostname)`
 - `nfu`: run `nix flake update --flake /home/derrik/nixos-config`
 - `nfu-rebuild`: change to the flake directory, update the flake, then rebuild the system using the hostname detected from `flake.nix`
 - `ngc`: run `nix-collect-garbage -d`
@@ -115,7 +115,7 @@ On any machine, ensure `/etc/nixos/hardware-configuration.nix` exists from a pri
 sudo ./deploy.sh
 ```
 
-The flake does not track `hardware-configuration.nix`; it references `/etc/nixos/hardware-configuration.nix` directly so each machine uses its own generated hardware config.
+The repo tracks a generic `hardware-configuration.nix`, but `deploy.sh` overwrites it from `/etc/nixos/hardware-configuration.nix` on each machine before applying the configuration.
 
 ## Hermes Agent
 
