@@ -110,10 +110,16 @@
             users.users."derrik" = {
               isNormalUser = true;
               description = "Derrik Diener";
-              extraGroups = [ "networkmanager" "wheel" ];
+              extraGroups = [ "networkmanager" "wheel" "hermes" ];
               shell = pkgs.zsh;
               packages = with pkgs; [];
             };
+
+            # Ensure Hermes state directory group is accessible
+            systemd.tmpfiles.rules = [
+              "d /var/lib/hermes/.hermes 0770 hermes hermes -"
+              "f /var/lib/hermes/.hermes/.env 0660 hermes hermes -"
+            ];
 
             # Install firefox.
             programs.firefox.enable = true;
