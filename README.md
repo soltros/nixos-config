@@ -4,30 +4,30 @@ NixOS system configuration managed as a flake, designed for deployment across mu
 
 ## Repository Structure
 
-- `flake.nix` — system flake definition, inputs, and host configuration
-- `flake.lock` — locked dependency versions
-- `deploy.sh` — deployment script for applying the configuration
-- `modules/` — modular configuration fragments
-- `hardware-configuration.nix` — excluded from repo; sourced directly from `/etc/nixos/hardware-configuration.nix` on each machine
+- `flake.nix`: system flake definition, inputs, and host configuration
+- `flake.lock`: locked dependency versions
+- `deploy.sh`: deployment script for applying the configuration
+- `modules/`: modular configuration fragments
+- `hardware-configuration.nix`: excluded from repo; sourced directly from `/etc/nixos/hardware-configuration.nix` on each machine
 
 ## Modules
 
-- `amdgpu.nix` — AMD GPU configuration via the open-source amdgpu driver
-- `intelgpu.nix` — Intel GPU configuration via the i915 driver
-- `derriks-apps.nix` — application package set
-- `gamemode.nix` — gaming performance mode
-- `steam.nix` — Steam runtime and dependencies
-- `tailscale-support.nix` — Tailscale mesh VPN
-- `unsecure-packages.nix` — allowed unfree packages
-- `ssh-server.nix` — OpenSSH server
-- `virtualization-support.nix` — virtualization tools and libvirt
+- `amdgpu.nix`: AMD GPU configuration via the open-source amdgpu driver
+- `intelgpu.nix`: Intel GPU configuration via the i915 driver
+- `derriks-apps.nix`: application package set
+- `gamemode.nix`: gaming performance mode
+- `steam.nix`: Steam runtime and dependencies
+- `tailscale-support.nix`: Tailscale mesh VPN
+- `unsecure-packages.nix`: allowed unfree packages
+- `ssh-server.nix`: OpenSSH server
+- `virtualization-support.nix`: virtualization tools and libvirt
 
 ## Hostname-Conditional Behavior
 
 The flake automatically selects modules based on the machine hostname:
 
-- `b450m-d3sh` — desktop with AMD GPU; enables `hardware.amd`
-- `13-1315u` — laptop with Intel Raptor Lake i3; enables `hardware.intel` and Intel microcode
+- `b450m-d3sh`: desktop with AMD GPU; enables `hardware.amd`
+- `13-1315u`: laptop with Intel Raptor Lake i3; enables `hardware.intel` and Intel microcode
 
 Both GPU modules are included in the flake, but only the matching one is enabled per host.
 
@@ -37,7 +37,21 @@ Both GPU modules are included in the flake, but only the matching one is enabled
 - Pantheon desktop environment
 - LightDM display manager
 - PipeWire audio with ALSA and PulseAudio compatibility
+- Flatpak support
 - CUPS printing support
+
+## Included Software
+
+- Firefox
+- Google Antigravity IDE
+- Google Antigravity CLI
+- Steam with 32-bit dependencies
+- Gamemode
+- Tailscale
+- Virtualization support via libvirt
+- OpenSSH server
+- ZSH with Oh My Zsh
+- Starship prompt
 
 ## Shell and Prompt
 
@@ -49,14 +63,14 @@ Both GPU modules are included in the flake, but only the matching one is enabled
 
 These are injected system-wide for the `derrik` user:
 
-- `nrb` — run `sudo nixos-rebuild switch --flake /home/derrik/nixos-config`
-- `nrb-test` — run `sudo nixos-rebuild test --flake /home/derrik/nixos-config`
-- `nrb-boot` — run `sudo nixos-rebuild boot --flake /home/derrik/nixos-config`
-- `nfu` — run `nix flake update --flake /home/derrik/nixos-config`
-- `nfu-rebuild` — change to the flake directory, update the flake, then rebuild the system using the hostname detected from `flake.nix`
-- `ngc` — run `nix-collect-garbage -d`
-- `nix-search` — run `nix search nixpkgs`
-- `nix-lint` — run `nix flake check --flake /home/derrik/nixos-config`
+- `nrb`: run `sudo nixos-rebuild switch --flake /home/derrik/nixos-config`
+- `nrb-test`: run `sudo nixos-rebuild test --flake /home/derrik/nixos-config`
+- `nrb-boot`: run `sudo nixos-rebuild boot --flake /home/derrik/nixos-config`
+- `nfu`: run `nix flake update --flake /home/derrik/nixos-config`
+- `nfu-rebuild`: change to the flake directory, update the flake, then rebuild the system using the hostname detected from `flake.nix`
+- `ngc`: run `nix-collect-garbage -d`
+- `nix-search`: run `nix search nixpkgs`
+- `nix-lint`: run `nix flake check --flake /home/derrik/nixos-config`
 
 ## Deployment
 
