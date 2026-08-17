@@ -132,6 +132,7 @@
                 nrb-test = "sudo nixos-rebuild test --flake /home/derrik/nixos-config";
                 nrb-boot = "sudo nixos-rebuild boot --flake /home/derrik/nixos-config";
                 nfu = "nix flake update --flake /home/derrik/nixos-config";
+                nfu-rebuild = "cd /home/derrik/nixos-config && sudo nix flake update && sudo nixos-rebuild switch --flake .\#\$($(awk -F'\"' '/hostname =/ {print \$2}' /home/derrik/nixos-config/flake.nix))";
                 ngc = "nix-collect-garbage -d";
                 nix-search = "nix search nixpkgs";
                 nix-lint = "nix flake check --flake /home/derrik/nixos-config";
