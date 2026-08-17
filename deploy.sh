@@ -26,6 +26,6 @@ git add .
 sudo git config --global --add safe.directory "$FLAKE_DIR"
 
 echo "Rebuilding NixOS configuration..."
-sudo nixos-rebuild switch --flake ".#${HOST}"
+sudo nixos-rebuild switch --flake ".#${HOST}" --impure
 
 echo "Deployment complete!"

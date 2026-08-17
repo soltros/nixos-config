@@ -130,11 +130,11 @@
             programs.zsh = {
               enable = true;
               shellAliases = {
-                nrb = "sudo nixos-rebuild switch --flake /home/derrik/nixos-config";
-                nrb-test = "sudo nixos-rebuild test --flake /home/derrik/nixos-config";
-                nrb-boot = "sudo nixos-rebuild boot --flake /home/derrik/nixos-config";
+                nrb = "sudo nixos-rebuild switch --flake /home/derrik/nixos-config --impure";
+                nrb-test = "sudo nixos-rebuild test --flake /home/derrik/nixos-config --impure";
+                nrb-boot = "sudo nixos-rebuild boot --flake /home/derrik/nixos-config --impure";
                 nfu = "nix flake update --flake /home/derrik/nixos-config";
-                nfu-rebuild = "cd /home/derrik/nixos-config && sudo nix flake update && sudo nixos-rebuild switch --flake .\#\$($(awk -F'\"' '/hostname =/ {print \$2}' /home/derrik/nixos-config/flake.nix))";
+                nfu-rebuild = "cd /home/derrik/nixos-config && sudo ./deploy.sh";
                 ngc = "nix-collect-garbage -d";
                 nix-search = "nix search nixpkgs";
                 nix-lint = "nix flake check --flake /home/derrik/nixos-config";
