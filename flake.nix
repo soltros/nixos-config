@@ -70,6 +70,27 @@
             services.xserver.displayManager.lightdm.enable = true;
             services.desktopManager.pantheon.enable = true;
 
+            # Dock favorites
+            programs.dconf.profiles.user.databases = [
+              {
+                settings."io/elementary/dock".launchers = [
+                  "firefox.desktop"
+                  "thunderbird.desktop"
+                  "discord.desktop"
+                  "org.signal.Signal.desktop"
+                  "im.fluffychat.Fluffychat.desktop"
+                  "io.github.victoralvesf.aonsoku.desktop"
+                  "steam.desktop"
+                  "com.heroicgameslauncher.hgl.desktop"
+                  "geany.desktop"
+                  "io.elementary.code.desktop"
+                  "Zettlr.desktop"
+                  "io.elementary.files.desktop"
+                  "io.elementary.terminal.desktop"
+                ];
+              }
+            ];
+
             # Enable Flatpak support
             services.flatpak.enable = true;
 
