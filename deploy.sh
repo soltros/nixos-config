@@ -7,7 +7,7 @@ set -e
 # Get the directory where this script is located
 FLAKE_DIR="$(dirname $(readlink -f $0))"
 # Automatically pull the hostname from flake.nix
-HOST=$(awk -F'"' '/^[[:space:]]*hostname[[:space:]]*=/ {print $2; exit}' "$FLAKE_DIR/flake.nix")
+HOST=$(hostname)
 
 cd "$FLAKE_DIR"
 
