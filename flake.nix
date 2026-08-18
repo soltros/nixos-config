@@ -139,7 +139,7 @@
         ohMyZsh = {
           enable = true;
           plugins = [ "git" "sudo" ];
-          customPlugins = [
+          customPkgs = [
             {
               name = "zsh-autosuggestions";
               src = pkgs.zsh-autosuggestions;
