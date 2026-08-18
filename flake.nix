@@ -151,6 +151,7 @@
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
         papirus-icon-theme
+        zsh-autosuggestions
       ];
 
       # Disable package documentation builds to bypass known unstable python3.12-doc bugs
