@@ -12,8 +12,6 @@ with lib;
     boot.kernelParams = [ "i915.enable_fbc=1" "i915.enable_guc=3" ];
     hardware.opengl = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
       extraPackages = with pkgs; [
         # Add any additional packages needed for specific Intel features or utilities
       ];
