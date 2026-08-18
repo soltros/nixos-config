@@ -111,7 +111,7 @@
         description = "Derrik Diener";
         extraGroups = [ "networkmanager" "wheel" "hermes" ];
         shell = pkgs.zsh;
-        packages = with pkgs: [];
+        packages = [];
       };
 
       # Ensure Hermes state directory group is accessible
