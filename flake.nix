@@ -138,7 +138,7 @@
         };
         ohMyZsh = {
           enable = true;
-          plugins = [ "git" "sudo" ];
+          plugins = [ "git" "sudo" "zsh-autosuggestions" ];
         };
       };
       programs.starship.enable = true;
