@@ -136,15 +136,10 @@
           nix-search = "nix search nixpkgs";
           nix-lint = "nix flake check --flake /home/derrik/nixos-config";
         };
+        autosuggestions.enable = true;
         ohMyZsh = {
           enable = true;
           plugins = [ "git" "sudo" ];
-          customPkgs = [
-            {
-              name = "zsh-autosuggestions";
-              src = pkgs.zsh-autosuggestions;
-            }
-          ];
         };
       };
       programs.starship.enable = true;
