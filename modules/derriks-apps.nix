@@ -17,7 +17,8 @@
     wget
     zettlr
     winetricks
-    wine-staging
+    wine64
+    #wine-staging
     pavucontrol
     distrobox
     geany

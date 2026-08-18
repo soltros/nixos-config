@@ -130,9 +130,9 @@
           nrb = "sudo nixos-rebuild switch --flake /home/derrik/nixos-config#$(cat /etc/hostname)";
           nrb-test = "sudo nixos-rebuild test --flake /home/derrik/nixos-config#$(cat /etc/hostname)";
           nrb-boot = "sudo nixos-rebuild boot --flake /home/derrik/nixos-config#$(cat /etc/hostname)";
-          nfu = "nix flake update --flake /home/derrik/nixos-config";
+          nfu = "sudo nix flake update --flake /home/derrik/nixos-config";
           nfu-rebuild = "cd /home/derrik/nixos-config && sudo ./deploy.sh";
-          ngc = "nix-collect-garbage -d";
+          ngc = "sudo nix-collect-garbage -d";
           nix-search = "nix search nixpkgs";
           nix-lint = "nix flake check --flake /home/derrik/nixos-config";
         };
@@ -202,7 +202,7 @@
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {
-            networking.hostName = "i3-1315u";
+            networking.hostName = "b450m-d3sh";
             hardware.amd.enable = false;
             hardware.intel.enable = true;
           })
