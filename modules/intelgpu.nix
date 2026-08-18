@@ -10,7 +10,7 @@ with lib;
   config = mkIf config.hardware.intel.enable {
     boot.kernelModules = [ "i915" "intel-ucode" ];
     boot.kernelParams = [ "i915.enable_fbc=1" "i915.enable_guc=3" ];
-    hardware.opengl = {
+    hardware.graphics = {
       enable = true;
       extraPackages = with pkgs; [
         # Add any additional packages needed for specific Intel features or utilities
