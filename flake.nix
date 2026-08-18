@@ -13,7 +13,7 @@
   outputs = { self, nixpkgs, hermes-agent, antigravity-nix, ... }@inputs: 
   let
     # Change your hostname here!
-    hostname = "b450m-d3sh";
+    hostname = "i3-1315u";
   in {
     nixosConfigurations = {
       "${hostname}" = nixpkgs.lib.nixosSystem {
