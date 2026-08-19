@@ -18,6 +18,7 @@
     zettlr
     winetricks
     wine64
+    fresh-editor
     #wine-staging
     pavucontrol
     distrobox

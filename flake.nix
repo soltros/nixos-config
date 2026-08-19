@@ -70,13 +70,15 @@
       # Enable Flatpak support
       services.flatpak.enable = true;
 
+      environment.sessionVariables.PATH = [ "/home/derrik/.cargo/bin" ];
+
       # Enable Hermes Agent
       services.hermes-agent = {
         enable = true;
         addToSystemPackages = true;
         container.enable = true;
         settings = {
-          model.default = "stepfun/step-3.7-flash:free";
+          model.default = "poolside/laguna-s-2.1:free";
           toolsets = [ "all" ];
           terminal = {
             backend = "local";
@@ -114,9 +116,14 @@
         packages = [];
       };
 
-      # Ensure Hermes state directory group is accessible
+      # Ensure Hermes state directory and user directory permissions are properly maintained
       systemd.tmpfiles.rules = [
-        "d /var/lib/hermes/.hermes 0770 hermes hermes -"
+        "d /var/lib/hermes 2770 hermes hermes -"
+        "d /var/lib/hermes/.hermes 2770 hermes hermes -"
+        "Z /var/lib/hermes 2770 hermes hermes -"
+        "A+ /var/lib/hermes - - - - default:group:hermes:rwx,group:hermes:rwx,default:mask::rwx"
+        "d /home/derrik/.hermes 0700 derrik users -"
+        "Z /home/derrik/.hermes 0700 derrik users -"
         "f /var/lib/hermes/.hermes/.env 0660 hermes hermes -"
       ];
 
@@ -168,7 +175,6 @@
         modules = [
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
-          ./modules/intelgpu.nix
           ./modules/derriks-apps.nix
           ./modules/gamemode.nix
           ./modules/steam.nix
@@ -190,7 +196,6 @@
         specialArgs = { inherit inputs; };
         modules = [
           hermes-agent.nixosModules.default
-          ./modules/amdgpu.nix
           ./modules/intelgpu.nix
           ./modules/derriks-apps.nix
           ./modules/gamemode.nix
