@@ -75,6 +75,10 @@
           /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/monospace-font-name "'Roboto Mono 10'"
           /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/gtk-theme "'io.elementary.stylesheet.blueberry'"
           /run/current-system/sw/bin/dconf write /org/gnome/desktop/sound/theme-name "'elementary'"
+          /run/current-system/sw/bin/dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/voxtype/']"
+          /run/current-system/sw/bin/dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/voxtype/name "'Voxtype Toggle Dictation'"
+          /run/current-system/sw/bin/dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/voxtype/command "'voxtype record toggle'"
+          /run/current-system/sw/bin/dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/voxtype/binding "'KP_Add'"
         '';
       };
 
