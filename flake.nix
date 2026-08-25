@@ -8,9 +8,13 @@
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    voxtype = {
+      url = "github:peteonrails/voxtype/v0.7.5";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, ... }@inputs: 
+  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs: 
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -57,14 +61,51 @@
         '';
       };
 
-      systemd.user.services.set-icon-theme = {
-        description = "Set Pantheon icon theme";
+      systemd.user.services.set-pantheon-theme = {
+        description = "Set Pantheon theme, cursor, and fonts";
         wantedBy = [ "graphical-session.target" ];
         serviceConfig.Type = "oneshot";
         serviceConfig.RemainAfterExit = true;
         script = ''
           /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/icon-theme "'Papirus-Dark'"
+          /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/cursor-theme "'elementary'"
+          /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/cursor-size 24
+          /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/font-name "'Inter 9'"
+          /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/document-font-name "'Open Sans 10'"
+          /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/monospace-font-name "'Roboto Mono 10'"
+          /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/gtk-theme "'io.elementary.stylesheet.blueberry'"
+          /run/current-system/sw/bin/dconf write /org/gnome/desktop/sound/theme-name "'elementary'"
         '';
+      };
+
+      # Fonts configuration
+      fonts = {
+        fontDir.enable = true;
+        packages = with pkgs; [
+          inter
+          open-sans
+          roboto
+          roboto-mono
+          noto-fonts
+          noto-fonts-cjk-sans
+          noto-fonts-color-emoji
+          dejavu_fonts
+          liberation_ttf
+          hack-font
+          fira-code
+          font-awesome
+        ];
+        fontconfig = {
+          enable = true;
+          defaultFonts = {
+            sansSerif = [ "Inter" "Noto Sans" "DejaVu Sans" ];
+            serif = [ "Noto Serif" "DejaVu Serif" ];
+            monospace = [ "Roboto Mono" "Hack" "DejaVu Sans Mono" ];
+            emoji = [ "Noto Color Emoji" ];
+          };
+          subpixel.rgba = "rgb";
+          hinting.style = "slight";
+        };
       };
 
       # Enable Flatpak support
@@ -78,7 +119,7 @@
         addToSystemPackages = true;
         container.enable = true;
         settings = {
-          model.default = "poolside/laguna-s-2.1:free";
+          model.default = "stepfun/step-3.7-flash:free";
           toolsets = [ "all" ];
           terminal = {
             backend = "local";
@@ -107,11 +148,15 @@
         pulse.enable = true;
       };
 
+      # Hardware and uinput for typing emulation / voxtype
+      hardware.uinput.enable = true;
+      programs.ydotool.enable = true;
+
       # Define a user account.
       users.users."derrik" = {
         isNormalUser = true;
         description = "Derrik Diener";
-        extraGroups = [ "networkmanager" "wheel" "hermes" ];
+        extraGroups = [ "networkmanager" "wheel" "hermes" "input" "uinput" ];
         shell = pkgs.zsh;
         packages = [];
       };
@@ -125,6 +170,7 @@
         "d /home/derrik/.hermes 0700 derrik users -"
         "Z /home/derrik/.hermes 0700 derrik users -"
         "f /var/lib/hermes/.hermes/.env 0660 hermes hermes -"
+        "d /data/workspace 0755 derrik users -"
       ];
 
       # Install firefox.
@@ -158,6 +204,12 @@
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
+        voxtype.packages.x86_64-linux.vulkan
+        voxtype.packages.x86_64-linux.osd-gtk4
+        wtype
+        wl-clipboard
+        ydotool
+        dotool
         papirus-icon-theme
         zsh-autosuggestions
       ];
@@ -187,7 +239,6 @@
           ({ config, pkgs, ... }: {
             networking.hostName = "b450m-d3sh";
             hardware.amd.enable = true;
-            hardware.intel.enable = false;
           })
         ];
       };
