@@ -247,6 +247,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           hermes-agent.nixosModules.default
+          ./modules/amdgpu.nix
           ./modules/intelgpu.nix
           ./modules/derriks-apps.nix
           ./modules/gamemode.nix
@@ -258,7 +259,7 @@
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {
-            networking.hostName = "b450m-d3sh";
+            networking.hostName = "i3-1315u";
             hardware.amd.enable = false;
             hardware.intel.enable = true;
           })
