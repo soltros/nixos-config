@@ -262,6 +262,7 @@
             networking.hostName = "i3-1315u";
             hardware.amd.enable = false;
             hardware.intel.enable = true;
+            services.jackett.enable = true;
           })
         ];
       };
