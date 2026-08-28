@@ -26,7 +26,39 @@
       # Use the latest Linux kernel
       boot.kernelPackages = pkgs.linuxPackages_latest;
 
+      # Required for VA-API/QSV init on modern Intel iGPUs (per NixOS wiki)
+      hardware.enableRedistributableFirmware = true;
+
+      # Fix microcode: hardware-configuration.nix sets this, but we pin it true here
+      hardware.cpu.intel.updateMicrocode = true;
+
+      # Persist ALSA mixer state across reboots (per NixOS ALSA wiki)
+      hardware.alsa.enablePersistence = true;
+
+      # Power management for laptops
+      powerManagement = {
+        enable = true;
+        cpuFreqGovernor = "schedutil";  # Intel P-state + schedutil = good balance
+        powertop.enable = true;
+      };
+
+      # ZRAM compressed swap — much faster than NVMe swap under memory pressure
+      # Size: 50% of RAM. On 8 GiB that's 4 GiB. In-place compress, no disk I/O.
+      # WARNING per NixOS wiki: when using zram, also enable systemd-oomd, because
+      # zram's hard capacity limit can prevent the kernel's OOM killer from firing.
+      zramSwap = {
+        enable = true;
+        memoryPercent = 50;
+      };
+      systemd.oomd.enable = true;
+
+      # Keep the existing swap partition as a last-resort overflow (optional,
+      # but harmless with zram in front of it). It's already declared in
+      # hardware-configuration.nix.
+
       networking.networkmanager.enable = true;
+      # Don't wait for network at boot — NetworkManager-wait-online blocks ~4.6 s
+      services.NetworkManager.wait-online.enable = false;
 
       time.timeZone = "America/Detroit";
 
@@ -249,6 +281,7 @@
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
           ./modules/intelgpu.nix
+          ./modules/intel-firmware.nix
           ./modules/derriks-apps.nix
           ./modules/gamemode.nix
           ./modules/steam.nix

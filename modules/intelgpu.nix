@@ -8,16 +8,37 @@ with lib;
   };
 
   config = mkIf config.hardware.intel.enable {
-    boot.kernelModules = [ "i915" "intel-ucode" ];
-    boot.kernelParams = [ "i915.enable_fbc=1" "i915.enable_guc=3" ];
+    # i915 is built into the kernel on modern kernels; ordering only.
+    boot.kernelModules = [ "kvm-intel" ];
+    boot.kernelParams = [
+      "i915.enable_fbc=1"         # Framebuffer compression — saves VRAM + power
+      "i915.enable_guc=3"         # GuC command submission + HuC media decode firmware
+      "i915.enable_psr=1"         # Panel Self-Refresh — idle display power savings
+      "i915.enable_dc=1"          # Display Power Saving for eDP panels
+    ];
+
     hardware.graphics = {
       enable = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [
-        # Add any additional packages needed for specific Intel features or utilities
+        # VA-API userspace driver for Broadwell (2014) and newer — covers Raptor Lake
+        intel-media-driver
+        libva
+        libva-utils
+        # Quick Sync Video (QSV) runtime — Tiger Lake (2020) and newer
+        vpl-gpu-rt
+        # Vulkan ICD for Intel
+        vulkan-loader
+        # i915 user-space tools
+        intel-gpu-tools
       ];
     };
 
-    # Optional: Enable VA-API (Video Acceleration API) for better video playback performance
     services.xserver.videoDrivers = [ "modesetting" ];
+
+    # Prefer the modern iHD VA-API backend (required for intel-media-driver)
+    environment.variables = {
+      LIBVA_DRIVER_NAME = "iHD";
+    };
   };
 }
