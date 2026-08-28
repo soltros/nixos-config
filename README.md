@@ -31,6 +31,64 @@ The flake automatically selects modules based on the machine hostname:
 
 Both GPU modules are included in the flake, but only the matching one is enabled per host.
 
+## Laptop Features (`i3-1315u`)
+
+In addition to the shared configuration, the laptop host enables the following
+features:
+
+### Storage
+- **Btrfs compression** — `compress=zstd:1` is enabled on `/`, `/home`, and `/nix`.
+  This reduces disk usage and improves I/O throughput on the 256 GB NVMe with
+  minimal CPU overhead.
+- **SSD optimizations** — `ssd` and `discard=async` mount options enable
+  TRIM garbage collection without blocking writes.
+- **noatime** — disables last-access timestamp updates to reduce write volume
+  and improve performance.
+- **Btrfs auto-scrub** — a monthly `btrfs scrub` runs on `/` to detect and
+  self-heal silent data corruption.
+
+### Graphics & Video Acceleration
+- **i915 kernel driver** — FBC (framebuffer compression), GuC firmware
+  submission, HuC media decode, Panel Self-Refresh (PSR), and Display Power
+  Saving (DC) are enabled via kernel parameters.
+- **VA-API** — `intel-media-driver` (iHD backend) for hardware-accelerated
+  video decode in Firefox, VLC, and other apps. Verified with `vainfo`.
+- **Quick Sync Video (QSV)** — `vpl-gpu-rt` provides Intel VPL runtime for
+  hardware-accelerated transcode in ffmpeg and OBS.
+- **Vulkan** — `vulkan-loader` + Mesa drivers for Intel integrated graphics.
+- **Tools** — `intel-gpu-tools` and `libva-utils` for diagnostics and tuning.
+
+### Audio
+- **SOF firmware** — `sof-firmware` is installed for the Intel Smart Sound DSP
+  on Raptor Lake-U. This allows the kernel's SOF stack to load codec firmware
+  at boot, which is required for reliable audio on this generation.
+- **ALSA persistence** — mixer state is saved at shutdown and restored on boot
+  so volume levels survive reboots.
+
+### Power Management
+- **CPU frequency** — `schedutil` governor is used with Intel P-state for
+  responsive frequency scaling that balances performance and power.
+- **powertop** — installed for diagnosing power consumption and applying tuning
+  suggestions.
+- **ZRAM swap** — 50% of RAM is allocated as a compressed block device in
+  memory (`zram0`). This is significantly faster than swapping to NVMe under
+  memory pressure. The existing swap partition remains as a last-resort
+  overflow.
+- **systemd-oomd** — enabled as a userspace OOM killer. When zram is full the
+  kernel's native OOM killer can fail to trigger; `oomd` handles this case by
+  terminating the largest memory consumers before the system locks up.
+- **NetworkManager wait-online disabled** — `NetworkManager-wait-online.service`
+  is disabled to avoid a ~4.6 s boot delay when no network is immediately
+  available.
+
+### Firmware & Microcode
+- **Intel microcode** — `updateMicrocode = true` ensures the CPU receives
+  microcode patches at every boot, patching silicon-level bugs and security
+  vulnerabilities.
+- **Redistributable firmware** — `enableRedistributableFirmware` is enabled so
+  that NixOS can ship binary firmware blobs required by the GPU, WiFi, and NVMe
+  controller.
+
 ## Desktop Environment
 
 - X11 windowing system
