@@ -78,7 +78,12 @@
       # Enable the X11 windowing system.
       services.xserver.enable = true;
 
-      # Enable the Pantheon Desktop Environment.
+      # Enable automatic Btrfs scrubbing to catch filesystem corruption early
+      services.btrfs.autoScrub = {
+        enable = true;
+        interval = "monthly";
+        fileSystems = [ "/" ];
+      };
       services.xserver.displayManager.lightdm.enable = true;
       services.desktopManager.pantheon.enable = true;
 
