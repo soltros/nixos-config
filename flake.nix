@@ -18,6 +18,7 @@
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
+      nix.settings.auto-optimise-store = true;
 
       # Bootloader.
       boot.loader.systemd-boot.enable = true;
@@ -75,13 +76,6 @@
 
       # Enable the X11 windowing system.
       services.xserver.enable = true;
-
-      # Enable automatic Btrfs scrubbing to catch filesystem corruption early
-      services.btrfs.autoScrub = {
-        enable = true;
-        interval = "monthly";
-        fileSystems = [ "/" ];
-      };
       services.xserver.displayManager.lightdm.enable = true;
       services.desktopManager.pantheon.enable = true;
 
@@ -110,6 +104,10 @@
           /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/monospace-font-name "'Roboto Mono 10'"
           /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/gtk-theme "'io.elementary.stylesheet.blueberry'"
           /run/current-system/sw/bin/dconf write /org/gnome/desktop/sound/theme-name "'elementary'"
+          /run/current-system/sw/bin/dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/voxtype/']"
+          /run/current-system/sw/bin/dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/voxtype/name "'Voxtype Toggle Dictation'"
+          /run/current-system/sw/bin/dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/voxtype/command "'voxtype record toggle'"
+          /run/current-system/sw/bin/dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/voxtype/binding "'KP_Add'"
         '';
       };
 
@@ -187,6 +185,18 @@
       hardware.uinput.enable = true;
       programs.ydotool.enable = true;
 
+      boot.kernel.sysctl = {
+        "vm.vfs_cache_pressure" = 50;
+        "vm.swappiness" = 10;
+      };
+
+      # services.thermald.enable = true;
+
+      services.btrfs.autoScrub = {
+        enable = true;
+        interval = "weekly";
+      };
+
       # Define a user account.
       users.users."derrik" = {
         isNormalUser = true;
@@ -247,10 +257,11 @@
         dotool
         papirus-icon-theme
         zsh-autosuggestions
+        bubblewrap # required for Muse sandbox (bwrap)
       ];
 
       # Disable package documentation builds to bypass known unstable python3.12-doc bugs
-      documentation.doc.enable = false;
+      documentation.enable = false;
 
       system.stateVersion = "26.05";
     };
@@ -269,6 +280,7 @@
           ./modules/unsecure-packages.nix
           ./modules/ssh-server.nix
           ./modules/virtualization-support.nix
+          ./modules/muse-code.nix
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {
@@ -292,6 +304,7 @@
           ./modules/unsecure-packages.nix
           ./modules/ssh-server.nix
           ./modules/virtualization-support.nix
+          ./modules/muse-code.nix
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {

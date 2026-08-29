@@ -8,29 +8,6 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/63bd8243-f7e9-468a-a412-6b237324a64d";
-      fsType = "btrfs";
-    };
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/63bd8243-f7e9-468a-a412-6b237324a64d";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
-
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/63bd8243-f7e9-468a-a412-6b237324a64d";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/7733-F95D";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
-
   # Btrfs mount options: compression, SSD mode, async discard, noatime
   # Compress everything on this 256 GB NVMe — zstd is near-free on modern CPUs
   # and a 256 GB disk has plenty of CPU headroom for it.
