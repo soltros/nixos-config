@@ -26,7 +26,6 @@
 
       boot.kernelParams = [
         "amd_pstate=active"
-        "mitigations=off"
         "transparent_hugepage=never"
       ];
 
@@ -156,7 +155,7 @@
         "vm.swappiness" = 10;
       };
 
-      services.thermald.enable = true;
+      # services.thermald.enable = true;
 
       services.btrfs.autoScrub = {
         enable = true;
