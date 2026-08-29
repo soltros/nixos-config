@@ -57,8 +57,6 @@
       # hardware-configuration.nix.
 
       networking.networkmanager.enable = true;
-      # Don't wait for network at boot — NetworkManager-wait-online blocks ~4.6 s
-      services.NetworkManager.wait-online.enable = false;
 
       time.timeZone = "America/Detroit";
 
