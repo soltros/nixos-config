@@ -1,137 +1,104 @@
-# NixOS Configuration
+# b450m-d3sh NixOS Flake
 
-NixOS system configuration managed as a flake, designed for deployment across multiple machines with hostname-conditional modules.
+Desktop configuration for Derrik's AMD desktop. Single host, no laptop references.
 
-## Repository Structure
+# Hardware
 
-- `flake.nix`: system flake definition, inputs, and host configuration
-- `flake.lock`: locked dependency versions
-- `deploy.sh`: deployment script for applying the configuration
-- `modules/`: modular configuration fragments
-- `hardware-configuration.nix`: tracked in repo and overwritten by `deploy.sh` from `/etc/nixos/hardware-configuration.nix` on each machine
+- CPU: AMD Ryzen 5 5600X
+- GPU: AMD Radeon (amdgpu driver)
+- RAM: 32 GB
+- Disk: NVMe Btrfs
+- Boot: systemd-boot on EFI
 
-## Modules
+# Kernel
 
-- `amdgpu.nix`: AMD GPU configuration via the open-source amdgpu driver
-- `intelgpu.nix`: Intel GPU configuration via the i915 driver
-- `derriks-apps.nix`: application package set
-- `gamemode.nix`: gaming performance mode
-- `steam.nix`: Steam runtime and dependencies
-- `tailscale-support.nix`: Tailscale mesh VPN
-- `unsecure-packages.nix`: allowed unfree packages
-- `ssh-server.nix`: OpenSSH server
-- `virtualization-support.nix`: virtualization tools and libvirt
+- Latest Linux kernel via nixpkgs unstable
+- amd_pstate=active for Ryzen power/performance scaling
+- mitigations=off for reduced Spectre/Meltdown overhead on a single-user desktop
+- transparent_hugepage=never for lower latency
 
-## Hostname-Conditional Behavior
+# CPU and power
 
-The flake automatically selects modules based on the machine hostname:
+- cpuFreqGovernor = ondemand
+- vm.swappiness = 10
+- vm.vfs_cache_pressure = 50
+- thermald enabled for thermal management under sustained load
 
-- `b450m-d3sh`: desktop with AMD GPU; enables `hardware.amd`
-- `13-1315u`: laptop with Intel Raptor Lake i3; enables `hardware.intel` and Intel microcode
+# Graphics
 
-Both GPU modules are included in the flake, but only the matching one is enabled per host.
+- amdgpu driver with SI/CIK legacy support enabled
+- OpenCL via ROCm ICD
+- Vulkan via Mesa RADV
+- 32-bit graphics support enabled
+- GameMode for gaming optimizations
 
-## Desktop Environment
+# Desktop
 
-- X11 windowing system
-- Pantheon desktop environment
+- Pantheon desktop environment on Wayland
 - LightDM display manager
-- PipeWire audio with ALSA and PulseAudio compatibility
-- Flatpak support
-- CUPS printing support
+- Custom dock favorites via dconf
+- Custom theme: Papirus-Dark icons, Blueberry GTK, elementary cursor
+- Fonts: Inter, Open Sans, Roboto Mono, Hack, Noto, DejaVu, Fira Code
+- Flatpak support enabled
+- Custom keybinding: Voxtype dictation toggle on KP_Add
+- Voxtype installed (Vulkan + OSD GTK4)
 
-## System Packages
+# Audio
 
-Installed via `derriks-apps.nix`:
+- PipeWire with ALSA and PulseAudio compatibility
+- 32-bit ALSA support
+- rtkit enabled
 
-- bitwarden-desktop
-- git
-- python312
-- btrfs-progs
-- appimage-run
-- papirus-icon-theme
-- libreoffice-qt
-- spotify
-- tailscale
-- vlc
-- gimp
-- wget
-- zettlr
-- winetricks
-- wine-staging
-- pavucontrol
-- distrobox
-- geany
-- thunderbird
-- ntfs3g
-- flatpak
-- discord
-- kopia
-- telegram-desktop
-- screen
-- nodejs
-- pipx
-- ncdu
-- python311Packages.pip
-- caffeine-ng
-- php
-- adapta-gtk-theme
-- mlocate
-- yt-dlp
-- pamixer
-- gthumb
-- unzip
-- lxrandr
-- pinta
-- virt-manager
-- pantheon-tweaks
-- gh
-- lazygit
+# Input and automation
 
-## Shell and Prompt
+- uinput enabled
+- ydotool and dotool for input automation
+- wtype for Wayland typing
+- wl-clipboard for clipboard
 
-- ZSH with Oh My Zsh
+# User
+
+- User: derrik
+- Shell: ZSH with Oh My Zsh (git, sudo plugins)
 - Starship prompt
-- Shell aliases for common Nix operations (see below)
+- Groups: networkmanager, wheel, hermes, input, uinput
 
-## Nix ZSH Aliases
+# System services
 
-These are injected system-wide for the `derrik` user:
+- NetworkManager
+- CUPS printing
+- thermald
+- weekly Btrfs scrub
+- Hermes Agent (system-level, container mode)
 
-- `nrb`: run `sudo nixos-rebuild switch --flake /home/derrik/nixos-config#$(hostname)`
-- `nrb-test`: run `sudo nixos-rebuild test --flake /home/derrik/nixos-config#$(hostname)`
-- `nrb-boot`: run `sudo nixos-rebuild boot --flake /home/derrik/nixos-config#$(hostname)`
-- `nfu`: run `nix flake update --flake /home/derrik/nixos-config`
-- `nfu-rebuild`: change to the flake directory, update the flake, then rebuild the system using the hostname detected from `flake.nix`
-- `ngc`: run `nix-collect-garbage -d`
-- `nix-search`: run `nix search nixpkgs`
-- `nix-lint`: run `nix flake check --flake /home/derrik/nixos-config`
+# Packages
 
-## Deployment
+- Antigravity IDE and CLI
+- Voxtype (Vulkan + OSD GTK4)
+- Firefox
+- Steam, Heroic Games Launcher
+- Bitwarden, Discord, Signal, Fluffychat, Telegram
+- VLC, GIMP, Spotify, LibreOffice
+- Git, lazygit, gh
+- Python 3.12, pipx, nodejs
+- virt-manager, distrobox
+- yt-dlp, kopia, caffeine-ng
+- wget, ncdu, unzip, lxrandr, pamixer, pavucontrol, gthumb, pinta, screen
 
-On any machine, ensure `/etc/nixos/hardware-configuration.nix` exists from a prior NixOS install, then run:
+# Nix configuration
 
-```bash
-sudo ./deploy.sh
-```
+- experimental features: nix-command, flakes
+- auto-optimise-store = true
+- allowUnfree = true
+- documentation builds disabled
 
-The repo tracks a generic `hardware-configuration.nix`, but `deploy.sh` overwrites it from `/etc/nixos/hardware-configuration.nix` on each machine before applying the configuration.
+# Aliases
 
-## Hermes Agent
-
-Hermes Agent is enabled as a system service with:
-
-- Model default: `stepfun/step-3.7-flash:free`
-- All toolsets enabled
-- Local terminal backend
-- Environment secrets from `/run/secrets/hermes-env`
-
-The `derrik` user is placed in the `hermes` group and the Hermes state directory permissions are managed via `systemd.tmpfiles` so the service and user access survive rebuilds.
-
-## Updating This Config
-
-```bash
-cd /home/derrik/nixos-config
-git pull
-nfu-rebuild
-```
+- nrb: nixos-rebuild switch
+- nrb-test: nixos-rebuild test
+- nrb-boot: nixos-rebuild boot
+- nfu: nix flake update
+- nfu-rebuild: deploy.sh
+- ngc: nix-collect-garbage -d
+- nix-search: nix search nixpkgs
+- nix-lint: nix flake check
