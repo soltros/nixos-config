@@ -14,17 +14,23 @@
     };
   };
 
-  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs: 
+  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs:
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
+      nix.settings.auto-optimise-store = true;
 
-      # Bootloader.
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
-      
-      # Use the latest Linux kernel
       boot.kernelPackages = pkgs.linuxPackages_latest;
+
+      boot.kernelParams = [
+        "amd_pstate=active"
+        "mitigations=off"
+        "transparent_hugepage=never"
+      ];
+
+      powerManagement.cpuFreqGovernor = "ondemand";
 
       networking.networkmanager.enable = true;
 
@@ -43,14 +49,10 @@
         LC_TIME = "en_US.UTF-8";
       };
 
-      # Enable the X11 windowing system.
       services.xserver.enable = true;
-
-      # Enable the Pantheon Desktop Environment.
       services.xserver.displayManager.lightdm.enable = true;
       services.desktopManager.pantheon.enable = true;
 
-      # Dock favorites via user dconf
       systemd.user.services.set-dock-favorites = {
         description = "Set Pantheon dock favorites";
         wantedBy = [ "graphical-session.target" ];
@@ -82,7 +84,6 @@
         '';
       };
 
-      # Fonts configuration
       fonts = {
         fontDir.enable = true;
         packages = with pkgs; [
@@ -112,12 +113,10 @@
         };
       };
 
-      # Enable Flatpak support
       services.flatpak.enable = true;
 
       environment.sessionVariables.PATH = [ "/home/derrik/.cargo/bin" ];
 
-      # Enable Hermes Agent
       services.hermes-agent = {
         enable = true;
         addToSystemPackages = true;
@@ -133,16 +132,13 @@
         environmentFiles = [ "/run/secrets/hermes-env" ];
       };
 
-      # Configure keymap in X11
       services.xserver.xkb = {
         layout = "us";
         variant = "";
       };
 
-      # Enable CUPS to print documents.
       services.printing.enable = true;
 
-      # Enable sound with pipewire.
       services.pulseaudio.enable = false;
       security.rtkit.enable = true;
       services.pipewire = {
@@ -152,11 +148,21 @@
         pulse.enable = true;
       };
 
-      # Hardware and uinput for typing emulation / voxtype
       hardware.uinput.enable = true;
       programs.ydotool.enable = true;
 
-      # Define a user account.
+      boot.kernel.sysctl = {
+        "vm.vfs_cache_pressure" = 50;
+        "vm.swappiness" = 10;
+      };
+
+      services.thermald.enable = true;
+
+      services.btrfs.autoScrub = {
+        enable = true;
+        interval = "weekly";
+      };
+
       users.users."derrik" = {
         isNormalUser = true;
         description = "Derrik Diener";
@@ -165,7 +171,6 @@
         packages = [];
       };
 
-      # Ensure Hermes state directory and user directory permissions are properly maintained
       systemd.tmpfiles.rules = [
         "d /var/lib/hermes 2770 hermes hermes -"
         "d /var/lib/hermes/.hermes 2770 hermes hermes -"
@@ -177,10 +182,8 @@
         "d /data/workspace 0755 derrik users -"
       ];
 
-      # Install firefox.
       programs.firefox.enable = true;
 
-      # Setup ZSH and Starship
       programs.zsh = {
         enable = true;
         shellAliases = {
@@ -201,7 +204,6 @@
       };
       programs.starship.enable = true;
 
-      # Allow unfree packages
       nixpkgs.config.allowUnfree = true;
 
       environment.systemPackages = with pkgs; [
@@ -218,7 +220,6 @@
         zsh-autosuggestions
       ];
 
-      # Disable package documentation builds to bypass known unstable python3.12-doc bugs
       documentation.doc.enable = false;
 
       system.stateVersion = "26.05";
@@ -243,28 +244,6 @@
           ({ config, pkgs, ... }: {
             networking.hostName = "b450m-d3sh";
             hardware.amd.enable = true;
-          })
-        ];
-      };
-      "i3-1315u" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          hermes-agent.nixosModules.default
-          ./modules/intelgpu.nix
-          ./modules/derriks-apps.nix
-          ./modules/gamemode.nix
-          ./modules/steam.nix
-          ./modules/tailscale-support.nix
-          ./modules/unsecure-packages.nix
-          ./modules/ssh-server.nix
-          ./modules/virtualization-support.nix
-          ./hardware-configuration.nix
-          shared
-          ({ config, pkgs, ... }: {
-            networking.hostName = "b450m-d3sh";
-            hardware.amd.enable = false;
-            hardware.intel.enable = true;
           })
         ];
       };
