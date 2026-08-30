@@ -8,38 +8,40 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  # Btrfs mount options: compression, SSD mode, async discard, noatime
+  # Compress everything on this 256 GB NVMe — zstd is near-free on modern CPUs
+  # and a 256 GB disk has plenty of CPU headroom for it.
+  boot.initrd.kernelModules = [
+    "xhci_pci"
+    "nvme"
+    "uas"
+    "sd_mod"
+  ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/19f75ec7-2afe-439f-ba91-5cd94ec0ebc9";
+    { device = "/dev/disk/by-uuid/63bd8243-f7e9-468a-a412-6b237324a64d";
       fsType = "btrfs";
+      options = [ "noatime" "compress=zstd:1" "ssd" "discard=async" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/19f75ec7-2afe-439f-ba91-5cd94ec0ebc9";
+    { device = "/dev/disk/by-uuid/63bd8243-f7e9-468a-a412-6b237324a64d";
       fsType = "btrfs";
-      options = [ "subvol=home" ];
+      options = [ "noatime" "compress=zstd:1" "ssd" "discard=async" "subvol=home" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/19f75ec7-2afe-439f-ba91-5cd94ec0ebc9";
+    { device = "/dev/disk/by-uuid/63bd8243-f7e9-468a-a412-6b237324a64d";
       fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/4A6F-09AF";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
+      options = [ "noatime" "compress=zstd:1" "ssd" "discard=async" "subvol=nix" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/0f8ee237-11fb-45b6-904d-846c01ef15c7"; }
+    [ { device = "/dev/disk/by-uuid/5e38fe54-68f9-4a12-a0bf-b99c198d3baa"; }
     ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
