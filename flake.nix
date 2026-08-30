@@ -197,6 +197,7 @@
           ngc = "sudo nix-collect-garbage -d";
           nix-search = "nix search nixpkgs";
           nix-lint = "nix flake check --flake /home/derrik/nixos-config";
+          hermes="hermes-agent --system-prompt-file /var/lib/hermes/.hermes/SOUL.md";
         };
         autosuggestions.enable = true;
         ohMyZsh = {
