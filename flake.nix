@@ -40,7 +40,7 @@
       powerManagement = {
         enable = true;
         cpuFreqGovernor = "schedutil";  # Intel P-state + schedutil = good balance
-        powertop.enable = true;
+        powertop.enable = false;
       };
 
       # ZRAM compressed swap — much faster than NVMe swap under memory pressure
