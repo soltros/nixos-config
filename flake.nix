@@ -152,8 +152,8 @@
         addToSystemPackages = true;
         container.enable = true;
         settings = {
-          model.provider = "nous";
-          model.default = "meituan/longcat-2.0:free";
+          model.provider = "meta-ai";
+          model.default = "muse-spark-1.2";
           toolsets = [ "all" ];
           terminal = {
             backend = "local";
