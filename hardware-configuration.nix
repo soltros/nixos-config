@@ -8,34 +8,32 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  # Btrfs mount options: compression, SSD mode, async discard, noatime
-  # Compress everything on this 256 GB NVMe — zstd is near-free on modern CPUs
-  # and a 256 GB disk has plenty of CPU headroom for it.
-  boot.initrd.kernelModules = [
-    "xhci_pci"
-    "nvme"
-    "uas"
-    "sd_mod"
-  ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "uas" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/63bd8243-f7e9-468a-a412-6b237324a64d";
       fsType = "btrfs";
-      options = [ "noatime" "compress=zstd:1" "ssd" "discard=async" ];
     };
 
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/63bd8243-f7e9-468a-a412-6b237324a64d";
       fsType = "btrfs";
-      options = [ "noatime" "compress=zstd:1" "ssd" "discard=async" "subvol=home" ];
+      options = [ "subvol=home" ];
     };
 
   fileSystems."/nix" =
     { device = "/dev/disk/by-uuid/63bd8243-f7e9-468a-a412-6b237324a64d";
       fsType = "btrfs";
-      options = [ "noatime" "compress=zstd:1" "ssd" "discard=async" "subvol=nix" ];
+      options = [ "subvol=nix" ];
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/7733-F95D";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
   swapDevices =
