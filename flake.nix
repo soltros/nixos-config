@@ -27,6 +27,7 @@
       boot.kernelParams = [
         "amd_pstate=active"
         "transparent_hugepage=never"
+        "usbcore.autosuspend=-1"
       ];
 
       powerManagement.cpuFreqGovernor = "performance";
