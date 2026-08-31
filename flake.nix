@@ -29,7 +29,7 @@
         "transparent_hugepage=never"
       ];
 
-      powerManagement.cpuFreqGovernor = "ondemand";
+      powerManagement.cpuFreqGovernor = "performance";
 
       networking.networkmanager.enable = true;
 
@@ -121,10 +121,12 @@
         addToSystemPackages = true;
         container.enable = true;
         settings = {
-          model.provider = "lmstudio";
-          model.default = "google/gemma-4-12b-qat";
-          model.base_url = "http://127.0.0.1:1234/v1";
-          model.lmstudio_load_mode = "jit";
+          model.provider = "meta-ai";
+          model.default = "muse-spark-1.2";
+          model.base_url = null;
+          model.api_mode = null;
+          model.lmstudio_load_mode = null;
+          model.context_length = null;
           toolsets = [ "all" ];
           terminal = {
             backend = "local";
@@ -197,7 +199,6 @@
           ngc = "sudo nix-collect-garbage -d";
           nix-search = "nix search nixpkgs";
           nix-lint = "nix flake check --flake /home/derrik/nixos-config";
-          hermes="hermes-agent --system-prompt-file /var/lib/hermes/.hermes/SOUL.md";
         };
         autosuggestions.enable = true;
         ohMyZsh = {
@@ -221,7 +222,7 @@
         dotool
         papirus-icon-theme
         zsh-autosuggestions
-        lmstudio
+        # lmstudio # removed for Hermes OpenCode setup
       ];
 
       documentation.doc.enable = false;
