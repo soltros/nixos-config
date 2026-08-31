@@ -152,10 +152,8 @@
         addToSystemPackages = true;
         container.enable = true;
         settings = {
-          model.provider = "lmstudio";
-          model.default = "google/gemma-4-e4b";
-          model.base_url = "http://127.0.0.1:1234/v1";
-          model.lmstudio_load_mode = "jit";
+          model.provider = "nous";
+          model.default = "meituan/longcat-2.0:free";
           toolsets = [ "all" ];
           terminal = {
             backend = "local";
@@ -261,7 +259,6 @@
         papirus-icon-theme
         zsh-autosuggestions
         bubblewrap # required for Muse sandbox (bwrap)
-        lmstudio
       ];
 
       # Disable package documentation builds to bypass known unstable python3.12-doc bugs
