@@ -122,9 +122,9 @@
         addToSystemPackages = true;
         container.enable = true;
         settings = {
-          model.provider = "meta-ai";
-          model.default = "muse-spark-1.2";
-          model.base_url = null;
+          model.provider = "custom";
+          model.default = "gemma4:12b";
+          model.base_url = "http://127.0.0.1:11434/v1";
           model.api_mode = null;
           model.lmstudio_load_mode = null;
           model.context_length = null;
