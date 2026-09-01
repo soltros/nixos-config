@@ -189,8 +189,8 @@ EOF
         addToSystemPackages = true;
         container.enable = true;
         settings = {
-          model.provider = "meta-ai";
-          model.default = "muse-spark-1.2";
+          model.provider = "openai-codex";
+          model.default = "gpt-5.5";
           toolsets = [ "all" ];
           terminal = {
             backend = "local";
@@ -249,10 +249,12 @@ EOF
         "d /var/lib/hermes 2770 hermes hermes -"
         "d /var/lib/hermes/.hermes 2770 hermes hermes -"
         "Z /var/lib/hermes 2770 hermes hermes -"
-        "A+ /var/lib/hermes - - - - default:group:hermes:rwx,group:hermes:rwx,default:mask::rwx"
+        "A+ /var/lib/hermes - - - - user:derrik:rwx,default:user:derrik:rwx,group:hermes:rwx,default:group:hermes:rwx,mask::rwx,default:mask::rwx"
         "d /home/derrik/.hermes 0700 derrik users -"
         "Z /home/derrik/.hermes 0700 derrik users -"
         "f /var/lib/hermes/.hermes/.env 0660 hermes hermes -"
+        "z /var/lib/hermes/.hermes/auth.json 0660 hermes hermes -"
+        "A+ /var/lib/hermes/.hermes/auth.json - - - - user:derrik:rw-,group:hermes:rw-,mask::rw-"
         "d /data/workspace 0755 derrik users -"
       ];
 
