@@ -111,10 +111,10 @@
       services.hermes-agent = {
         enable = true;
         addToSystemPackages = true;
-        container.enable = true;
+        container.enable = false;
         settings = {
           model.provider = "openai-codex";
-          model.default = "gpt-5.5";
+          model.default = "gpt-5.4-mini";
           toolsets = [ "all" ];
           terminal = {
             backend = "local";
@@ -229,6 +229,7 @@
           ./modules/amdgpu.nix
           ./modules/derriks-apps.nix
           ./modules/gamemode.nix
+          ./modules/hermes-codex-profiles.nix
           ./modules/hermes-runtime-compat.nix
           ./modules/plasma-desktop.nix
           ./modules/steam.nix

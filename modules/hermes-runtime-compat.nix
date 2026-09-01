@@ -71,6 +71,7 @@
 
   environment.systemPackages = with pkgs; [
     chromium
+    codex
     uv
   ];
 
@@ -78,6 +79,7 @@
     extraPackages = with pkgs; [
       bash
       chromium
+      codex
       curl
       nodejs
       uv
