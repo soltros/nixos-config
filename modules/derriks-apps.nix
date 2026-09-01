@@ -47,7 +47,6 @@
     lxrandr
     pinta
     virt-manager
-    pantheon-tweaks
     gh
     lazygit
   ];
