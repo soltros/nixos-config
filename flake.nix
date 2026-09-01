@@ -171,7 +171,7 @@
       users.users."derrik" = {
         isNormalUser = true;
         description = "Derrik Diener";
-        extraGroups = [ "networkmanager" "wheel" "hermes" "input" "uinput" ];
+        extraGroups = [ "networkmanager" "wheel" "hermes" "input" "uinput" "video" "render" ];
         shell = pkgs.zsh;
         packages = [];
       };
@@ -246,6 +246,7 @@
           ./modules/ssh-server.nix
           ./modules/virtualization-support.nix
           ./modules/muse-code.nix
+          ./modules/ollama.nix
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {
