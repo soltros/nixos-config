@@ -229,6 +229,7 @@
           ./modules/amdgpu.nix
           ./modules/derriks-apps.nix
           ./modules/gamemode.nix
+          ./modules/hermes-runtime-compat.nix
           ./modules/plasma-desktop.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
