@@ -26,11 +26,37 @@
 
       boot.kernelParams = [
         "amd_pstate=active"
+        "pcie_aspm=off"
         "transparent_hugepage=never"
         "usbcore.autosuspend=-1"
       ];
 
-      powerManagement.cpuFreqGovernor = "performance";
+      # Desktop: favor stability/performance over power saving. In particular,
+      # keep USB devices/controllers out of runtime autosuspend and prevent the
+      # machine from entering sleep states that reset the xHCI controller.
+      powerManagement = {
+        enable = true;
+        cpuFreqGovernor = "performance";
+        powertop.enable = false;
+      };
+      services.power-profiles-daemon.enable = false;
+      services.logind.settings.Login = {
+        IdleAction = "ignore";
+        HandleHibernateKey = "ignore";
+        HandleLidSwitch = "ignore";
+        HandleLidSwitchExternalPower = "ignore";
+        HandleSuspendKey = "ignore";
+      };
+      systemd.sleep.settings.Sleep = {
+        AllowHibernation = "no";
+        AllowHybridSleep = "no";
+        AllowSuspend = "no";
+        AllowSuspendThenHibernate = "no";
+      };
+      services.udev.extraRules = ''
+        ACTION=="add|change", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
+        ACTION=="add|change", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="on"
+      '';
 
       networking.networkmanager.enable = true;
 
@@ -160,12 +186,8 @@ EOF
         addToSystemPackages = true;
         container.enable = true;
         settings = {
-          model.provider = "custom";
-          model.default = "gemma4:12b";
-          model.base_url = "http://127.0.0.1:11434/v1";
-          model.api_mode = null;
-          model.lmstudio_load_mode = null;
-          model.context_length = null;
+          model.provider = "openai-codex";
+          model.default = "gpt-5.5";
           toolsets = [ "all" ];
           terminal = {
             backend = "local";
@@ -218,10 +240,12 @@ EOF
         "d /var/lib/hermes 2770 hermes hermes -"
         "d /var/lib/hermes/.hermes 2770 hermes hermes -"
         "Z /var/lib/hermes 2770 hermes hermes -"
-        "A+ /var/lib/hermes - - - - default:group:hermes:rwx,group:hermes:rwx,default:mask::rwx"
+        "A+ /var/lib/hermes - - - - user:derrik:rwx,default:user:derrik:rwx,group:hermes:rwx,default:group:hermes:rwx,mask::rwx,default:mask::rwx"
         "d /home/derrik/.hermes 0700 derrik users -"
         "Z /home/derrik/.hermes 0700 derrik users -"
         "f /var/lib/hermes/.hermes/.env 0660 hermes hermes -"
+        "z /var/lib/hermes/.hermes/auth.json 0660 hermes hermes -"
+        "A+ /var/lib/hermes/.hermes/auth.json - - - - user:derrik:rw-,group:hermes:rw-,mask::rw-"
         "d /data/workspace 0755 derrik users -"
       ];
 
@@ -284,7 +308,6 @@ EOF
           ./modules/ssh-server.nix
           ./modules/virtualization-support.nix
           ./modules/muse-code.nix
-          ./modules/ollama.nix
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {
