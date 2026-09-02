@@ -71,6 +71,22 @@ EOF
 
       $KWRITE --file kglobalshortcutsrc --group "voxtype-toggle.desktop" --key "_k_friendly_name" "Voxtype Toggle Dictation"
       $KWRITE --file kglobalshortcutsrc --group "voxtype-toggle.desktop" --key "_launch" "KP_Add,none,Voxtype Toggle Dictation"
+
+      # 7. Hermes Agent launcher (dedicated Kitty terminal)
+      cat << 'EOF' > "$HOME/.local/share/applications/hermes-agent.desktop"
+[Desktop Entry]
+Name=Hermes Agent
+Comment=Launch Hermes Agent in its own Kitty terminal
+Exec=/run/current-system/sw/bin/kitty --class hermes-agent --title "Hermes Agent" --working-directory /data/workspace /run/current-system/sw/bin/hermes
+Type=Application
+Terminal=false
+Icon=utilities-terminal
+Categories=Utility;TerminalEmulator;ArtificialIntelligence;
+StartupNotify=true
+EOF
+
+      $KWRITE --file kglobalshortcutsrc --group "hermes-agent.desktop" --key "_k_friendly_name" "Hermes Agent"
+      $KWRITE --file kglobalshortcutsrc --group "hermes-agent.desktop" --key "_launch" "Meta+Alt+H,none,Launch Hermes Agent"
     '';
   };
 }
