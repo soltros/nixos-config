@@ -177,14 +177,16 @@ The repo tracks a generic `hardware-configuration.nix`, but `deploy.sh` overwrit
 
 ## Hermes Agent
 
-Hermes Agent is enabled as a system service with:
+Hermes Agent is enabled as a native system service with:
 
 - Model default: `stepfun/step-3.7-flash:free`
 - All toolsets enabled
 - Local terminal backend
 - Environment secrets from `/run/secrets/hermes-env`
 
-The `derrik` user is placed in the `hermes` group and the Hermes state directory permissions are managed via `systemd.tmpfiles` so the service and user access survive rebuilds.
+Hermes uses `/var/lib/hermes/.hermes` for state. The `derrik` account belongs to
+the `hermes` group, and `auth.json` is group-readable and writable so the native
+service and interactive CLI can share credentials.
 
 ## Updating This Config
 
