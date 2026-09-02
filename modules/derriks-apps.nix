@@ -49,5 +49,6 @@
     virt-manager
     gh
     lazygit
+    kitty
   ];
 }

@@ -115,7 +115,7 @@
         settings = {
           model.provider = "openai-codex";
           model.default = "gpt-5.4-mini";
-          toolsets = [ "all" ];
+          toolsets = [ "all" "skills" ];
           terminal = {
             backend = "local";
             timeout = 180;
@@ -222,6 +222,7 @@
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
           ./modules/derriks-apps.nix
+          ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
           ./modules/hermes-codex-profiles.nix
           ./modules/hermes-runtime-compat.nix
