@@ -223,6 +223,7 @@
         dotool
         papirus-icon-theme
         zsh-autosuggestions
+        codex
         bubblewrap # required for Muse sandbox (bwrap)
       ];
 
