@@ -9,12 +9,14 @@
   systemd.user.services.set-plasma-settings = {
     description = "Configure KDE Plasma dark theme, Papirus icons, fonts, and shortcuts";
     wantedBy = [ "graphical-session.target" ];
+    restartIfChanged = true;
     serviceConfig.Type = "oneshot";
-    serviceConfig.RemainAfterExit = true;
     path = with pkgs; [
       kdePackages.kconfig
+      kdePackages.kservice
       coreutils
       dconf
+      desktop-file-utils
     ];
     script = ''
       KWRITE="${pkgs.kdePackages.kconfig}/bin/kwriteconfig6"
@@ -289,12 +291,19 @@ Exec=/run/current-system/sw/bin/kitty --config /home/derrik/.config/kitty/hermes
 Type=Application
 Terminal=false
 Icon=hermes-durandal
-Categories=Utility;TerminalEmulator;ArtificialIntelligence;
+Categories=System;TerminalEmulator;
+Keywords=Hermes;Durandal;Marathon;AI;Agent;
+NoDisplay=false
+DBusActivatable=false
 StartupNotify=true
 EOF
+      chmod 644 "$HOME/.local/share/applications/hermes-agent.desktop"
 
       $KWRITE --file kglobalshortcutsrc --group "hermes-agent.desktop" --key "_k_friendly_name" "Durandal"
       $KWRITE --file kglobalshortcutsrc --group "hermes-agent.desktop" --key "_launch" "Meta+Alt+H,none,Launch Durandal"
+
+      update-desktop-database "$HOME/.local/share/applications" || true
+      kbuildsycoca6 --noincremental || true
     '';
   };
 }
