@@ -118,6 +118,7 @@ printf 'D U R A N D A L\n'
 printf '\033[38;2;255;43;43m'
 printf 'Hermes Agent // Marathon terminal uplink\n'
 printf '\033[0m\n'
+export HERMES_HOME=/var/lib/hermes/.hermes
 sleep 0.6
 exec /run/current-system/sw/bin/hermes
 EOF
