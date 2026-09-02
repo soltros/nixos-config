@@ -164,15 +164,9 @@
       };
 
       systemd.tmpfiles.rules = [
-        "d /var/lib/hermes 2770 hermes hermes -"
-        "d /var/lib/hermes/.hermes 2770 hermes hermes -"
-        "Z /var/lib/hermes 2770 hermes hermes -"
-        "A+ /var/lib/hermes - - - - user:derrik:rwx,default:user:derrik:rwx,group:hermes:rwx,default:group:hermes:rwx,mask::rwx,default:mask::rwx"
-        "d /home/derrik/.hermes 0700 derrik users -"
-        "Z /home/derrik/.hermes 0700 derrik users -"
-        "f /var/lib/hermes/.hermes/.env 0660 hermes hermes -"
+        # The module keeps auth.json private by default; permit interactive
+        # members of the hermes group to use the shared CLI credentials.
         "z /var/lib/hermes/.hermes/auth.json 0660 hermes hermes -"
-        "A+ /var/lib/hermes/.hermes/auth.json - - - - user:derrik:rw-,group:hermes:rw-,mask::rw-"
         "d /data/workspace 0755 derrik users -"
       ];
 
