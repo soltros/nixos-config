@@ -1,0 +1,10 @@
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -575,6 +575,7 @@ py-modules = [
+   "hermes_state_portability",
+   "hermes_state_schema",
+   "hermes_state_search",
++  "hermes_state_registry",
+   "hermes_startup_watchdog",
+   "hermes_time",
+   "hermes_logging",
