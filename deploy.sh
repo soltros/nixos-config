@@ -24,12 +24,7 @@ cd "$FLAKE_DIR"
 # Mark the directory as safe for git when running as root (solves the libgit2 error)
 sudo git config --global --add safe.directory "$FLAKE_DIR"
 
-<<<<<<< HEAD
-echo "Rebuilding NixOS configuration..."
-sudo nixos-rebuild switch --flake "${FLAKE_DIR}#${HOST}"
-=======
 echo "Rebuilding NixOS configuration for ${HOST}..."
 sudo nixos-rebuild switch --flake "${FLAKE_DIR}#${HOST}" --impure
->>>>>>> 5d5b518 (fix: deploy.sh no longer overwrites hardware-configuration.nix from /etc/nixos)
 
 echo "Deployment complete!"
