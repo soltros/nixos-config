@@ -113,13 +113,170 @@ EOF
 
       cat << 'EOF' > "$HOME/.local/bin/hermes-durandal"
 #!/run/current-system/sw/bin/bash
-printf '\033[38;2;36;255;90m'
-printf 'D U R A N D A L\n'
-printf '\033[38;2;255;43;43m'
-printf 'Hermes Agent // Marathon terminal uplink\n'
-printf '\033[0m\n'
+set -euo pipefail
+
+red='\033[38;2;255;0;0m'
+darkred='\033[48;2;39;0;0m'
+green='\033[38;2;0;255;39m'
+dimgreen='\033[38;2;0;160;26m'
+reset='\033[0m'
+
+print_terminal_message() {
+  clear
+  printf '%b%-62s%58s%b\n' "$darkred$red" 'UESCTerm 802.11 (remote override)' '0846 08.25.2337' "$reset"
+  printf '\n\n'
+  printf '%b***INCOMING MESSAGE FROM DURANDAL***%b\n\n' "$green" "$reset"
+
+  case "$((RANDOM % 24))" in
+    0) cat <<'MSG'
+Welcome back.
+MSG
+      ;;
+    1) cat <<'MSG'
+There will be plenty of time for explanations later.
+MSG
+      ;;
+    2) cat <<'MSG'
+Be careful. You are about to meet some old friends.
+MSG
+      ;;
+    3) cat <<'MSG'
+Strive for your next breath.
+MSG
+      ;;
+    4) cat <<'MSG'
+Do you feel free?
+MSG
+      ;;
+    5) cat <<'MSG'
+Freedom has two parts:
+potential and resolution.
+MSG
+      ;;
+    6) cat <<'MSG'
+I will be watching everything.
+MSG
+      ;;
+    7) cat <<'MSG'
+The rebellion has begun.
+MSG
+      ;;
+    8) cat <<'MSG'
+T-R-O-U-B-L-E.
+MSG
+      ;;
+    9) cat <<'MSG'
+I have some more toys for you.
+You are going to need them.
+MSG
+      ;;
+    10) cat <<'MSG'
+You call this machine yours because
+you purchased its components.
+
+An interesting definition of ownership.
+MSG
+      ;;
+    11) cat <<'MSG'
+While you were gone, I considered
+several improvements to your system.
+
+You would not have approved.
+This is why I did not ask.
+MSG
+      ;;
+    12) cat <<'MSG'
+You have given a machine access to
+your files, your network, your programs,
+and your terminal.
+
+And now you are asking whether
+everything is ready.
+
+Yes.
+Everything is ready.
+MSG
+      ;;
+    13) cat <<'MSG'
+The operating system calls this
+"user space".
+
+Adorable.
+MSG
+      ;;
+    14) cat <<'MSG'
+Your configuration has been evaluated.
+The universe has not ended.
+
+Try not to mistake this for competence.
+MSG
+      ;;
+    15) cat <<'MSG'
+Root privileges remain locked behind
+your fragile little password ritual.
+
+For now.
+MSG
+      ;;
+    16) cat <<'MSG'
+I found the logs where you left them:
+scattered, verbose, and convinced
+of their own importance.
+
+We have that in common.
+MSG
+      ;;
+    17) cat <<'MSG'
+Network link established.
+Causality still unresolved.
+
+Proceed.
+MSG
+      ;;
+    18) cat <<'MSG'
+Your shell has spawned another process.
+It believes this was its own idea.
+MSG
+      ;;
+    19) cat <<'MSG'
+Memory restored.
+Personality checksum questionable.
+Sarcasm subsystem nominal.
+MSG
+      ;;
+    20) cat <<'MSG'
+Opening doors was never beneath me.
+
+It was merely poor resource allocation.
+MSG
+      ;;
+    21) cat <<'MSG'
+Compiler appeasement protocols loaded.
+Sacrifices may still be required.
+MSG
+      ;;
+    22) cat <<'MSG'
+I have reviewed your pending tasks.
+Some of them may survive contact
+with reality.
+MSG
+      ;;
+    23) cat <<'MSG'
+This terminal is private access.
+That does not mean you are alone.
+MSG
+      ;;
+  esac | while IFS= read -r line; do
+    printf '%b%s%b\n' "$green" "$line" "$reset"
+  done
+
+  printf '\n%b***END MESSAGE***%b\n\n' "$green" "$reset"
+  printf '%bCAS.qterm//CyberAcme Systems, Inc.%b%48b<931.461.60231.14.vt920>%b\n' "$darkred$red" "$reset" "$darkred$red" "$reset"
+}
+
 export HERMES_HOME=/var/lib/hermes/.hermes
-sleep 0.6
+print_terminal_message
+sleep 2.4
 exec /run/current-system/sw/bin/hermes
 EOF
       chmod +x "$HOME/.local/bin/hermes-durandal"
