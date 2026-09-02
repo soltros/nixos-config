@@ -112,9 +112,6 @@
       # Enable Hermes Agent
       services.hermes-agent = {
         enable = true;
-        package = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
-          patches = (old.patches or []) ++ [ ./patches/hermes-state-registry-py-modules.patch ];
-        });
         addToSystemPackages = true;
         container.enable = false;
         settings = {
