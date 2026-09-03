@@ -33,6 +33,7 @@
 , libGL
 , libusb1
 , qt6
+, bubblewrap
 }:
 
 let
@@ -118,6 +119,7 @@ stdenv.mkDerivation rec {
 
     # Symlink binary wrapper with ozone / wayland flags support
     makeWrapper $out/lib/ChatGPT $out/bin/chatgpt \
+      --prefix PATH : "${lib.makeBinPath [ bubblewrap ]}" \
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath buildInputs}:$out/lib" \
       --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
 
