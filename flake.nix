@@ -250,7 +250,7 @@
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/plasma-desktop.nix
+          ./modules/cosmic.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
