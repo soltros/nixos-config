@@ -222,12 +222,12 @@
         modules = [
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
+          ./modules/cosmic-desktop.nix
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
           ./modules/hermes-codex-profiles.nix
           ./modules/hermes-runtime-compat.nix
-          ./modules/plasma-desktop.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
