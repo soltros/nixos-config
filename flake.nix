@@ -250,7 +250,7 @@
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/cosmic.nix
+          ./modules/cosmic-desktop.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
@@ -276,7 +276,9 @@
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/plasma-desktop.nix
+          ./modules/cosmic-desktop.nix
+          ./modules/cosmic-theme.nix
+          ./modules/plymouth-theme.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
