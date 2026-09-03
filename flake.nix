@@ -40,19 +40,6 @@
         powertop.enable = false;
       };
       services.power-profiles-daemon.enable = false;
-      services.logind.settings.Login = {
-        IdleAction = "ignore";
-        HandleHibernateKey = "ignore";
-        HandleLidSwitch = "ignore";
-        HandleLidSwitchExternalPower = "ignore";
-        HandleSuspendKey = "ignore";
-      };
-      systemd.sleep.settings.Sleep = {
-        AllowHibernation = "no";
-        AllowHybridSleep = "no";
-        AllowSuspend = "no";
-        AllowSuspendThenHibernate = "no";
-      };
       services.udev.extraRules = ''
         ACTION=="add|change", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
         ACTION=="add|change", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="on"
