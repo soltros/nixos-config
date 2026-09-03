@@ -203,8 +203,14 @@
 
       # Allow unfree packages
       nixpkgs.config.allowUnfree = true;
+      nixpkgs.overlays = [
+        (final: prev: {
+          chatgpt = prev.callPackage ./pkgs/chatgpt.nix {};
+        })
+      ];
 
       environment.systemPackages = with pkgs; [
+        chatgpt
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
@@ -226,6 +232,14 @@
       system.stateVersion = "26.05";
     };
   in {
+    packages.x86_64-linux = rec {
+      chatgpt = (import nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      }).callPackage ./pkgs/chatgpt.nix {};
+      default = chatgpt;
+    };
+
     nixosConfigurations = {
       "b450m-d3sh" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
