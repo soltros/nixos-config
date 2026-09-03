@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   # Hermes tool installers sometimes fetch generic Linux binaries (uv-managed
   # Python tools, agent-browser/Chromium, cua-driver). NixOS needs nix-ld for
@@ -76,6 +76,19 @@
   ];
 
   services.hermes-agent = {
+    package = (inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
+      postInstall = (old.postInstall or "") + ''
+        mkdir -p $out/lib/python3.12/site-packages
+        cp ${inputs.hermes-agent}/hermes_state_registry.py $out/lib/python3.12/site-packages/
+        cp ${inputs.hermes-agent}/mini_swe_runner.py $out/lib/python3.12/site-packages/
+        if [ -f "${inputs.hermes-agent}/hermes_state_holders.py" ]; then
+          cp ${inputs.hermes-agent}/hermes_state_holders.py $out/lib/python3.12/site-packages/
+        fi
+        for bin in $out/bin/*; do
+          wrapProgram "$bin" --prefix PYTHONPATH : "$out/lib/python3.12/site-packages"
+        done
+      '';
+    }));
     extraPackages = with pkgs; [
       bash
       chromium
