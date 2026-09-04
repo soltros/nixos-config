@@ -40,7 +40,7 @@ let
   sources = {
     x86_64-linux = {
       url = "https://persistent.oaistatic.com/codex-app-prod/linux/deb/latest/chatgpt_amd64.deb";
-      sha256 = "08sj3858c804mf2wn7fncvms37d7jx37pnhy69i6s4zl49zlg9j2";
+      hash = "sha256-K7RSK+h33mwX5fTAcbBuxkiCsd0JqPC9IErwI6t1bZw=";
     };
     aarch64-linux = {
       url = "https://persistent.oaistatic.com/codex-app-prod/linux/deb/latest/chatgpt_arm64.deb";
@@ -54,7 +54,8 @@ stdenv.mkDerivation rec {
   version = "42.3.0";
 
   src = fetchurl {
-    inherit (srcInfo) url sha256;
+    inherit (srcInfo) url;
+    hash = srcInfo.hash or srcInfo.sha256;
   };
 
   nativeBuildInputs = [
