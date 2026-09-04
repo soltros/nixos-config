@@ -2,7 +2,11 @@
   description = "NixOS system flake for derrik";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    unity-on-nix = {
+      url = "github:soltros/unity-on-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hermes-agent.url = "github:NousResearch/hermes-agent";
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
@@ -14,7 +18,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs:
+  outputs = { self, nixpkgs, unity-on-nix, hermes-agent, antigravity-nix, voxtype, ... }@inputs:
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -92,6 +96,11 @@
       };
 
       services.flatpak.enable = true;
+      xdg.portal = {
+        enable = true;
+        config.common.default = "*";
+        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      };
 
       environment.sessionVariables.PATH = [ "/home/derrik/.cargo/bin" ];
 
@@ -183,6 +192,7 @@
       nixpkgs.overlays = [
         (final: prev: {
           chatgpt = prev.callPackage ./pkgs/chatgpt.nix {};
+          pipx = prev.pipx.overridePythonAttrs (_: { doCheck = false; });
         })
       ];
 
@@ -221,9 +231,11 @@
         specialArgs = { inherit inputs; };
         modules = [
           hermes-agent.nixosModules.default
+          unity-on-nix.nixosModules.default
+          ./modules/unity-desktop.nix
           ./modules/amdgpu.nix
-          ./modules/cosmic-desktop.nix
-          ./modules/cosmic-theme.nix
+          # ./modules/cosmic-desktop.nix
+          # ./modules/cosmic-theme.nix
           ./modules/plymouth-theme.nix
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
