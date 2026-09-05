@@ -40,8 +40,6 @@ Desktop configuration for Derrik's AMD desktop. Single host, no laptop reference
 - Custom theme: Papirus-Dark icons, Blueberry GTK, elementary cursor
 - Fonts: Inter, Open Sans, Roboto Mono, Hack, Noto, DejaVu, Fira Code
 - Flatpak support enabled
-- Custom keybinding: Voxtype dictation toggle on KP_Add
-- Voxtype installed (Vulkan + OSD GTK4)
 
 # Audio
 
@@ -74,7 +72,6 @@ Desktop configuration for Derrik's AMD desktop. Single host, no laptop reference
 # Packages
 
 - Antigravity IDE and CLI
-- Voxtype (Vulkan + OSD GTK4)
 - Firefox
 - Steam, Heroic Games Launcher
 - Bitwarden, Discord, Signal, Fluffychat, Telegram
