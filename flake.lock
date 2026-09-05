@@ -141,16 +141,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1788179007,
-        "narHash": "sha256-hn1oU2rue2SYK8dAr8+WNZWtbsz1S2W5mnHlSEuh3bo=",
-        "owner": "nixos",
+        "lastModified": 1788405554,
+        "narHash": "sha256-r2f1oUwixlgq9zOdYLqJLfS/lWBT60/IITjhTKI59JU=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "34ab99075ac4f7e40cf037eef32cb1c360bb85e9",
+        "rev": "a5cc6f2c37bf518436dc8d1c288ccd0c43c2f4c4",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -231,6 +231,7 @@
         "antigravity-nix": "antigravity-nix",
         "hermes-agent": "hermes-agent",
         "nixpkgs": "nixpkgs_2",
+        "unity-on-nix": "unity-on-nix",
         "voxtype": "voxtype"
       }
     },
@@ -261,6 +262,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "unity-on-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788586806,
+        "narHash": "sha256-6cBpWBZiWC4xgteJpmn0zdrLw4dDZz9bkUWGxxih66M=",
+        "owner": "soltros",
+        "repo": "unity-on-nix",
+        "rev": "981a206bf396118b8282e9d552ca09308395a652",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soltros",
+        "repo": "unity-on-nix",
         "type": "github"
       }
     },

@@ -2,7 +2,7 @@
   description = "NixOS system flake for derrik";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     hermes-agent.url = "github:NousResearch/hermes-agent";
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
@@ -12,9 +12,13 @@
       url = "github:peteonrails/voxtype/v0.7.5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    unity-on-nix = {
+      url = "github:soltros/unity-on-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs: 
+  outputs = { self, nixpkgs, unity-on-nix, hermes-agent, antigravity-nix, voxtype, ... }@inputs: 
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -106,6 +110,11 @@
 
       # Enable Flatpak support
       services.flatpak.enable = true;
+      xdg.portal = {
+        enable = true;
+        config.common.default = "*";
+        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      };
 
       environment.sessionVariables.PATH = [ "/home/derrik/.cargo/bin" ];
 
@@ -206,6 +215,7 @@
       nixpkgs.overlays = [
         (final: prev: {
           chatgpt = prev.callPackage ./pkgs/chatgpt.nix {};
+          pipx = prev.pipx.overridePythonAttrs (_: { doCheck = false; });
         })
       ];
 
@@ -246,11 +256,12 @@
         specialArgs = { inherit inputs; };
         modules = [
           hermes-agent.nixosModules.default
+          unity-on-nix.nixosModules.default
+          ./modules/unity-desktop.nix
           ./modules/amdgpu.nix
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/cosmic-desktop.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
@@ -270,15 +281,14 @@
         specialArgs = { inherit inputs; };
         modules = [
           hermes-agent.nixosModules.default
+          unity-on-nix.nixosModules.default
+          ./modules/unity-desktop.nix
           ./modules/amdgpu.nix
           ./modules/intelgpu.nix
           ./modules/intel-firmware.nix
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/cosmic-desktop.nix
-          ./modules/cosmic-theme.nix
-          ./modules/plymouth-theme.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
