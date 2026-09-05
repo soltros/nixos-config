@@ -8,17 +8,13 @@
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    voxtype = {
-      url = "github:peteonrails/voxtype/v0.7.5";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     unity-on-nix = {
       url = "github:soltros/unity-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, unity-on-nix, hermes-agent, antigravity-nix, voxtype, ... }@inputs: 
+  outputs = { self, nixpkgs, unity-on-nix, hermes-agent, antigravity-nix, ... }@inputs: 
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -224,8 +220,6 @@
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
-        voxtype.packages.x86_64-linux.vulkan
-        voxtype.packages.x86_64-linux.osd-gtk4
         wtype
         wl-clipboard
         ydotool
