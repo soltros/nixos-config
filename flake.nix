@@ -206,11 +206,14 @@
       nixpkgs.overlays = [
         (final: prev: {
           chatgpt = prev.callPackage ./pkgs/chatgpt.nix {};
+          termsmith = prev.callPackage ./pkgs/termsmith {};
         })
       ];
 
       environment.systemPackages = with pkgs; [
         chatgpt
+        termsmith
+        alacritty
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
@@ -232,11 +235,14 @@
       system.stateVersion = "26.05";
     };
   in {
-    packages.x86_64-linux = rec {
-      chatgpt = (import nixpkgs {
+    packages.x86_64-linux = let
+      pkgsFor = import nixpkgs {
         system = "x86_64-linux";
         config.allowUnfree = true;
-      }).callPackage ./pkgs/chatgpt.nix {};
+      };
+    in rec {
+      chatgpt = pkgsFor.callPackage ./pkgs/chatgpt.nix {};
+      termsmith = pkgsFor.callPackage ./pkgs/termsmith {};
       default = chatgpt;
     };
 
