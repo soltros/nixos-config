@@ -222,8 +222,7 @@
         modules = [
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
-          ./modules/cosmic-desktop.nix
-          ./modules/cosmic-theme.nix
+          ./modules/lomiri.nix
           ./modules/plymouth-theme.nix
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
