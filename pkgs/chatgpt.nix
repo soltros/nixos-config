@@ -51,7 +51,7 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "chatgpt";
-  version = "42.3.0";
+  version = "26.901.51231";
 
   src = fetchurl {
     inherit (srcInfo) url sha256;
