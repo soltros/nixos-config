@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    soltros-nixpkgs = {
+      url = "github:soltros/soltros_nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hermes-agent.url = "github:NousResearch/hermes-agent";
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
@@ -157,7 +161,6 @@
         "d /data/workspace 0755 derrik users -"
       ];
 
-      programs.firefox.enable = true;
 
       programs.zsh = {
         enable = true;
@@ -181,15 +184,15 @@
 
       nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
+        inputs.soltros-nixpkgs.overlays.default
         (final: prev: {
-          chatgpt = prev.callPackage ./pkgs/chatgpt.nix {};
-          termsmith = prev.callPackage ./pkgs/termsmith {};
           texliveMedium = prev.texliveSmall;
         })
       ];
 
       environment.systemPackages = with pkgs; [
         chatgpt
+        waterfox
         termsmith
         alacritty
         antigravity-nix.packages.x86_64-linux.default
@@ -211,17 +214,6 @@
       system.stateVersion = "26.05";
     };
   in {
-    packages.x86_64-linux = let
-      pkgsFor = import nixpkgs {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-    in rec {
-      chatgpt = pkgsFor.callPackage ./pkgs/chatgpt.nix {};
-      termsmith = pkgsFor.callPackage ./pkgs/termsmith {};
-      default = chatgpt;
-    };
-
     nixosConfigurations = {
       "b450m-d3sh" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

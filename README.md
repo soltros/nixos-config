@@ -75,7 +75,7 @@ Desktop configuration for Derrik's AMD desktop. Single host, no laptop reference
 
 - Antigravity IDE and CLI
 - Voxtype (Vulkan + OSD GTK4)
-- Firefox
+- Waterfox
 - Steam, Heroic Games Launcher
 - Bitwarden, Discord, Signal, Fluffychat, Telegram
 - VLC, GIMP, Spotify, LibreOffice
