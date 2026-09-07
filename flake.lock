@@ -242,11 +242,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788790485,
-        "narHash": "sha256-+eM+SXLouG5AI4YMiDI4W8nRtyP8lDGrn+2/4riU/8g=",
+        "lastModified": 1788730878,
+        "narHash": "sha256-Bi+yPwWxV+3bKe9ODH41jupO0dbeuY1xD5b7KO8gmqY=",
         "owner": "soltros",
         "repo": "soltros_nixpkgs",
-        "rev": "e93fe793cf4eeed3412151fae1ce042076f74dd9",
+        "rev": "af8224436977861367fae3864e56335729d20687",
         "type": "github"
       },
       "original": {

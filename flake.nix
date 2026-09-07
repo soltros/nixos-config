@@ -182,7 +182,6 @@
           ls = "eza --icons=auto";
           ll = "eza -la --icons=auto --git";
           tree = "eza --tree --icons=auto";
-
         };
         autosuggestions.enable = true;
         ohMyZsh = {
@@ -195,21 +194,16 @@
       nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
         inputs.soltros-nixpkgs.overlays.default
-        (final: prev: {
-          texliveMedium = prev.texliveSmall;
-        })
       ];
 
       environment.systemPackages = with pkgs; [
         chatgpt
-        waterfox
-        termsmith
-        alacritty
         eza
         bat
         ripgrep
         fd
         duf
+        waterfox
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
