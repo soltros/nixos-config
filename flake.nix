@@ -94,13 +94,14 @@
           hack-font
           fira-code
           font-awesome
+          nerd-fonts.symbols-only
         ];
         fontconfig = {
           enable = true;
           defaultFonts = {
             sansSerif = [ "Inter" "Noto Sans" "DejaVu Sans" ];
             serif = [ "Noto Serif" "DejaVu Serif" ];
-            monospace = [ "Roboto Mono" "Hack" "DejaVu Sans Mono" ];
+            monospace = [ "Roboto Mono" "Symbols Nerd Font" "Hack" "DejaVu Sans Mono" ];
             emoji = [ "Noto Color Emoji" ];
           };
           subpixel.rgba = "rgb";
