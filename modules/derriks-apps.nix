@@ -26,7 +26,6 @@
     thunderbird
     ntfs3g
     appimage-run
-    #firefox
     flatpak
     discord
     kopia
