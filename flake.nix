@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    soltros-nixpkgs = {
+      url = "github:soltros/soltros_nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hermes-agent.url = "github:NousResearch/hermes-agent";
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
@@ -182,9 +186,6 @@
         "d /data/workspace 0755 derrik users -"
       ];
 
-      # Install firefox.
-      programs.firefox.enable = true;
-
       # Setup ZSH and Starship
       programs.zsh = {
         enable = true;
@@ -209,14 +210,15 @@
       # Allow unfree packages
       nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
+        inputs.soltros-nixpkgs.overlays.default
         (final: prev: {
-          chatgpt = prev.callPackage ./pkgs/chatgpt.nix {};
           pipx = prev.pipx.overridePythonAttrs (_: { doCheck = false; });
         })
       ];
 
       environment.systemPackages = with pkgs; [
         chatgpt
+        waterfox
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
@@ -236,14 +238,6 @@
       system.stateVersion = "26.05";
     };
   in {
-    packages.x86_64-linux = rec {
-      chatgpt = (import nixpkgs {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      }).callPackage ./pkgs/chatgpt.nix {};
-      default = chatgpt;
-    };
-
     nixosConfigurations = {
       "b450m-d3sh" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

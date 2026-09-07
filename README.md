@@ -52,7 +52,7 @@ features:
   submission, HuC media decode, Panel Self-Refresh (PSR), and Display Power
   Saving (DC) are enabled via kernel parameters.
 - **VA-API** — `intel-media-driver` (iHD backend) for hardware-accelerated
-  video decode in Firefox, VLC, and other apps. Verified with `vainfo`.
+  video decode in Waterfox, VLC, and other apps. Verified with `vainfo`.
 - **Quick Sync Video (QSV)** — `vpl-gpu-rt` provides Intel VPL runtime for
   hardware-accelerated transcode in ffmpeg and OBS.
 - **Vulkan** — `vulkan-loader` + Mesa drivers for Intel integrated graphics.

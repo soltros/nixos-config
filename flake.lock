@@ -213,7 +213,28 @@
         "antigravity-nix": "antigravity-nix",
         "hermes-agent": "hermes-agent",
         "nixpkgs": "nixpkgs_2",
+        "soltros-nixpkgs": "soltros-nixpkgs",
         "unity-on-nix": "unity-on-nix"
+      }
+    },
+    "soltros-nixpkgs": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788730878,
+        "narHash": "sha256-Bi+yPwWxV+3bKe9ODH41jupO0dbeuY1xD5b7KO8gmqY=",
+        "owner": "soltros",
+        "repo": "soltros_nixpkgs",
+        "rev": "af8224436977861367fae3864e56335729d20687",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soltros",
+        "repo": "soltros_nixpkgs",
+        "type": "github"
       }
     },
     "systems": {
