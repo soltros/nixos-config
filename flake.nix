@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    soltros-nixpkgs = {
+      url = "github:soltros/soltros_nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     unity-on-nix = {
       url = "github:soltros/unity-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -162,7 +166,6 @@
         "d /data/workspace 0755 derrik users -"
       ];
 
-      programs.firefox.enable = true;
 
       programs.zsh = {
         enable = true;
@@ -186,14 +189,15 @@
 
       nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
+        inputs.soltros-nixpkgs.overlays.default
         (final: prev: {
-          chatgpt = prev.callPackage ./pkgs/chatgpt.nix {};
           pipx = prev.pipx.overridePythonAttrs (_: { doCheck = false; });
         })
       ];
 
       environment.systemPackages = with pkgs; [
         chatgpt
+        waterfox
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
@@ -211,14 +215,6 @@
       system.stateVersion = "26.05";
     };
   in {
-    packages.x86_64-linux = rec {
-      chatgpt = (import nixpkgs {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      }).callPackage ./pkgs/chatgpt.nix {};
-      default = chatgpt;
-    };
-
     nixosConfigurations = {
       "b450m-d3sh" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
