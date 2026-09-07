@@ -173,6 +173,14 @@
           ngc = "sudo nix-collect-garbage -d";
           nix-search = "nix search nixpkgs";
           nix-lint = "nix flake check --flake /home/derrik/nixos-config";
+          # Replacements for common utilities
+          cat = "bat --paging=never";
+          grep = "rg";
+          find = "fd";
+          df = "duf";
+          ls = "eza --icons=auto";
+          ll = "eza -la --icons=auto --git";
+          tree = "eza --tree --icons=auto";
         };
         autosuggestions.enable = true;
         ohMyZsh = {
@@ -189,6 +197,11 @@
 
       environment.systemPackages = with pkgs; [
         chatgpt
+        eza
+        bat
+        ripgrep
+        fd
+        duf
         waterfox
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
