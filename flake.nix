@@ -277,6 +277,7 @@
           ./modules/ssh-server.nix
           ./modules/virtualization-support.nix
           ./modules/muse-code.nix
+	  ./modules/plymouth-theme.nix
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {
