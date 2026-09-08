@@ -292,7 +292,7 @@
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {
-            networking.hostName = "i3-1315u";
+            networking.hostName = "nixos-mediacenter";
             hardware.amd.enable = false;
             hardware.intel.enable = true;
             services.jackett.enable = true;
