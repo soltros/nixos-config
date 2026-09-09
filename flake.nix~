@@ -2,7 +2,7 @@
   description = "NixOS system flake for derrik";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";;
     soltros-nixpkgs = {
       url = "github:soltros/soltros_nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
