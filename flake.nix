@@ -2,7 +2,7 @@
   description = "NixOS system flake for derrik";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     soltros-nixpkgs = {
       url = "github:soltros/soltros_nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -203,7 +203,9 @@
         ripgrep
         fd
         duf
+	flakebuilder
         waterfox
+	nixboutique
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
@@ -230,6 +232,7 @@
         modules = [
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
+          ./modules/apps.nix
           ./modules/pantheon-desktop.nix
           ./modules/plymouth-theme.nix
           ./modules/derriks-apps.nix
