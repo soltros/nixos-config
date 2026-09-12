@@ -26,10 +26,10 @@
   let
     shared = { config, pkgs, ... }:
     let
-      browserosVersion = "0.41.0";
+      browserosVersion = "0.44.0.1";
       browserosSrc = pkgs.fetchurl {
         url = "https://github.com/browseros-ai/BrowserOS/releases/download/v${browserosVersion}/BrowserOS_v${browserosVersion}_x64.AppImage";
-        hash = "sha256-H9zz90XwpmiVHzD3CSO+g2IaZrM54Olerc3gsjr91Vk=";
+        hash = "sha256-ALnyVMnexYy48br9qbWaEbOZm7hJR9g39a9nYzbWXwo=";
       };
       browserosContents = pkgs.appimageTools.extract {
         pname = "browseros";
