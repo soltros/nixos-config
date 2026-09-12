@@ -16,9 +16,13 @@
       url = "github:peteonrails/voxtype/v0.7.5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    browseros-ai = {
+      url = "github:Hill-Brandon-M/browseros-ai";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs:
+  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, browseros-ai, ... }@inputs:
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -194,6 +198,7 @@
       nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
         inputs.soltros-nixpkgs.overlays.default
+        browseros-ai.overlays.default
       ];
 
       environment.systemPackages = with pkgs; [
@@ -205,6 +210,7 @@
         duf
 	flakebuilder
         waterfox
+        browseros-ai.packages.${pkgs.system}.default
 	nixboutique
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
