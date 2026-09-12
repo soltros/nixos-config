@@ -24,7 +24,39 @@
 
   outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, browseros-ai, ... }@inputs: 
   let
-    shared = { config, pkgs, ... }: {
+    shared = { config, pkgs, ... }:
+    let
+      browserosVersion = "0.41.0";
+      browserosSrc = pkgs.fetchurl {
+        url = "https://github.com/browseros-ai/BrowserOS/releases/download/v${browserosVersion}/BrowserOS_v${browserosVersion}_x64.AppImage";
+        hash = "sha256-H9zz90XwpmiVHzD3CSO+g2IaZrM54Olerc3gsjr91Vk=";
+      };
+      browserosContents = pkgs.appimageTools.extract {
+        pname = "browseros";
+        version = browserosVersion;
+        src = browserosSrc;
+      };
+      browseros = pkgs.appimageTools.wrapType2 {
+        pname = "browseros";
+        version = browserosVersion;
+        src = browserosSrc;
+        extraInstallCommands = ''
+          install -m 444 -D ${browserosContents}/browseros.desktop -t $out/share/applications
+          substituteInPlace $out/share/applications/browseros.desktop \
+            --replace 'Exec=AppRun' 'Exec=browseros'
+          cp -r ${browserosContents}/usr/share/icons $out/share
+        '';
+        meta = {
+          description = "Open-source agentic AI web browser";
+          homepage = "https://browseros.com/";
+          downloadPage = "https://github.com/browseros-ai/BrowserOS/releases";
+          license = pkgs.lib.licenses.agpl3Only;
+          sourceProvenance = with pkgs.lib.sourceTypes; [ binaryNativeCode ];
+          platforms = [ "x86_64-linux" ];
+          mainProgram = "browseros";
+        };
+      };
+    in {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
       nix.settings.auto-optimise-store = true;
 
@@ -219,13 +251,12 @@
       nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
         inputs.soltros-nixpkgs.overlays.default
-        browseros-ai.overlays.default
       ];
 
       environment.systemPackages = with pkgs; [
         chatgpt
         waterfox
-        browseros-ai.packages.${pkgs.system}.default
+        browseros
         termsmith
         alacritty
         eza
