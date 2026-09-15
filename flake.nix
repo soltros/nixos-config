@@ -20,7 +20,39 @@
 
   outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs:
   let
-    shared = { config, pkgs, ... }: {
+    shared = { config, pkgs, ... }:
+    let
+      browserosVersion = "0.44.0.1";
+      browserosSrc = pkgs.fetchurl {
+        url = "https://github.com/browseros-ai/BrowserOS/releases/download/v${browserosVersion}/BrowserOS_v${browserosVersion}_x64.AppImage";
+        hash = "sha256-ALnyVMnexYy48br9qbWaEbOZm7hJR9g39a9nYzbWXwo=";
+      };
+      browserosContents = pkgs.appimageTools.extract {
+        pname = "browseros";
+        version = browserosVersion;
+        src = browserosSrc;
+      };
+      browseros = pkgs.appimageTools.wrapType2 {
+        pname = "browseros";
+        version = browserosVersion;
+        src = browserosSrc;
+        extraInstallCommands = ''
+          install -m 444 -D ${browserosContents}/browseros.desktop -t $out/share/applications
+          substituteInPlace $out/share/applications/browseros.desktop \
+            --replace 'Exec=AppRun' 'Exec=browseros'
+          cp -r ${browserosContents}/usr/share/icons $out/share
+        '';
+        meta = {
+          description = "Open-source agentic AI web browser";
+          homepage = "https://browseros.com/";
+          downloadPage = "https://github.com/browseros-ai/BrowserOS/releases";
+          license = pkgs.lib.licenses.agpl3Only;
+          sourceProvenance = with pkgs.lib.sourceTypes; [ binaryNativeCode ];
+          platforms = [ "x86_64-linux" ];
+          mainProgram = "browseros";
+        };
+      };
+    in {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
       nix.settings.auto-optimise-store = true;
 
@@ -205,6 +237,7 @@
         duf
 	flakebuilder
         waterfox
+        browseros
 	nixboutique
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide

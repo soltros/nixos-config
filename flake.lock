@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789110902,
-        "narHash": "sha256-dGqG5oE8BPhLSk08d1UBrTo0dhOIcbNtGeGT7hWZsXE=",
+        "lastModified": 1789197223,
+        "narHash": "sha256-MVHEq1J+aE8NaapAot0BXEFP9f+4jXQRus6tFgp2P+0=",
         "owner": "jacopone",
         "repo": "antigravity-nix",
-        "rev": "af9b4b138af1b0805720564f825bbdd715e5acf5",
+        "rev": "0d6f9760ee4d685c6e75faeafb5055b93c4bc4aa",
         "type": "github"
       },
       "original": {
@@ -89,11 +89,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1789139829,
-        "narHash": "sha256-5BzcnDCE8z7PjBpRJ1oK6x7gsYPunIG84ccSIe4okq8=",
+        "lastModified": 1789228156,
+        "narHash": "sha256-A6P9BhYLkAuDzWLBjHe4avXASN1mrrveMAS3vRicnEk=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "ad03f20dd61919ca2135d6904e787a94284aacaf",
+        "rev": "476d7223b594824545debcc29df0c53e4fb0c782",
         "type": "github"
       },
       "original": {
@@ -242,11 +242,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789140724,
-        "narHash": "sha256-JfKVjaobIX9QYGXjEYFMBzjCQoi3aIVuyJJgOJNDJUc=",
+        "lastModified": 1789227741,
+        "narHash": "sha256-TlCFGeaj/4QzUCF9KE+WfgC9LfhKrgD5d2OfHssTaro=",
         "owner": "soltros",
         "repo": "soltros_nixpkgs",
-        "rev": "5f69091b7c06a3809d6f837082de0ac86c01d611",
+        "rev": "8f1395ab90e69f757c2fb9f85d0f9fa0dcbc4b52",
         "type": "github"
       },
       "original": {
