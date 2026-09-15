@@ -16,9 +16,13 @@
       url = "github:peteonrails/voxtype/v0.7.5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wayfire-studio = {
+      url = "github:soltros/wayfire-studio";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs:
+  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, wayfire-studio, ... }@inputs:
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -233,7 +237,7 @@
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
           ./modules/apps.nix
-          ./modules/pantheon-desktop.nix
+          wayfire-studio.nixosModules.default
           ./modules/plymouth-theme.nix
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
@@ -251,6 +255,10 @@
           ({ config, pkgs, ... }: {
             networking.hostName = "b450m-d3sh";
             hardware.amd.enable = true;
+            desktop.wayfireStudio = {
+              enable = true;
+              defaultProfile = "classic";
+            };
           })
         ];
       };
