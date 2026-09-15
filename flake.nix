@@ -16,9 +16,13 @@
       url = "github:peteonrails/voxtype/v0.7.5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wayfire-studio = {
+      url = "github:soltros/wayfire-studio";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs: 
+  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, wayfire-studio, ... }@inputs:
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -27,7 +31,7 @@
       # Bootloader.
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
-      
+
       # Use the latest Linux kernel
       boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -257,6 +261,7 @@
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
           ./modules/cosmic-desktop.nix
+          wayfire-studio.nixosModules.default
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
@@ -268,6 +273,10 @@
           ({ config, pkgs, ... }: {
             networking.hostName = "b450m-d3sh";
             hardware.amd.enable = true;
+            desktop.wayfireStudio = {
+              enable = true;
+              defaultProfile = "classic";
+            };
           })
         ];
       };
@@ -283,6 +292,7 @@
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
           ./modules/cosmic-desktop.nix
+          wayfire-studio.nixosModules.default
           ./modules/cosmic-theme.nix
           ./modules/plymouth-theme.nix
           ./modules/steam.nix
@@ -297,6 +307,10 @@
             networking.hostName = "i3-1315u";
             hardware.amd.enable = false;
             hardware.intel.enable = true;
+            desktop.wayfireStudio = {
+              enable = true;
+              defaultProfile = "classic";
+            };
             services.jackett.enable = true;
           })
         ];
