@@ -258,6 +258,11 @@
             desktop.wayfireStudio = {
               enable = true;
               defaultProfile = "classic";
+              extraSettings = {
+                # LG 2560x1440 on the left; Acer 1920x1080 on the right.
+                "output:DP-3".position = "0,0";
+                "output:DP-2".position = "2560,0";
+              };
             };
           })
         ];

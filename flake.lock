@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789110902,
-        "narHash": "sha256-dGqG5oE8BPhLSk08d1UBrTo0dhOIcbNtGeGT7hWZsXE=",
+        "lastModified": 1789456590,
+        "narHash": "sha256-l+eVN2ZQE7IIvyKmhHlHiouLzfzvtCAGgSYPybAVygE=",
         "owner": "jacopone",
         "repo": "antigravity-nix",
-        "rev": "af9b4b138af1b0805720564f825bbdd715e5acf5",
+        "rev": "c0718d9185b063e685fc133f79f8b8d6276d070f",
         "type": "github"
       },
       "original": {
@@ -89,11 +89,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1789139829,
-        "narHash": "sha256-5BzcnDCE8z7PjBpRJ1oK6x7gsYPunIG84ccSIe4okq8=",
+        "lastModified": 1789507489,
+        "narHash": "sha256-aS0uDep3cNPGybfn+1Nu2ASzlcndcWxIAxpn3uit8yI=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "ad03f20dd61919ca2135d6904e787a94284aacaf",
+        "rev": "5910de20bc9839fdd36e791a9d72ba2c2e722f66",
         "type": "github"
       },
       "original": {
@@ -141,11 +141,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1789006805,
-        "narHash": "sha256-xB8mKMOx1IA9vTDNLmJZ6n4wCMq/cuWBBOzGCRnqxrU=",
+        "lastModified": 1789286504,
+        "narHash": "sha256-eiEK7cKZORNEvX0GeF3RtNEF/JXhgf2RqSp3230q13E=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8ce4ef6cb6f871616146b9fe26d2a5ae594e94fe",
+        "rev": "ef34387ddd751e1ab8857adf4676492d32eb24ec",
         "type": "github"
       },
       "original": {
@@ -232,7 +232,8 @@
         "hermes-agent": "hermes-agent",
         "nixpkgs": "nixpkgs_2",
         "soltros-nixpkgs": "soltros-nixpkgs",
-        "voxtype": "voxtype"
+        "voxtype": "voxtype",
+        "wayfire-studio": "wayfire-studio"
       }
     },
     "soltros-nixpkgs": {
@@ -242,11 +243,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789140724,
-        "narHash": "sha256-JfKVjaobIX9QYGXjEYFMBzjCQoi3aIVuyJJgOJNDJUc=",
+        "lastModified": 1789350442,
+        "narHash": "sha256-ylEgPUrSfPa7CuRb9o4Jbi1aK0DSOVYXRz2A0hKxEdM=",
         "owner": "soltros",
         "repo": "soltros_nixpkgs",
-        "rev": "5f69091b7c06a3809d6f837082de0ac86c01d611",
+        "rev": "a74a50cfeeba956ce7dffab1451cb8b5fddaa438",
         "type": "github"
       },
       "original": {
@@ -329,6 +330,26 @@
         "owner": "peteonrails",
         "ref": "v0.7.5",
         "repo": "voxtype",
+        "type": "github"
+      }
+    },
+    "wayfire-studio": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789507598,
+        "narHash": "sha256-dAufawPzfA3GZBHb2z+cmdjTeTCB7QYCwAhPPSgxkfI=",
+        "owner": "soltros",
+        "repo": "wayfire-studio",
+        "rev": "4eac254aee44dd0906b99c66b06d64678a0e0d8d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soltros",
+        "repo": "wayfire-studio",
         "type": "github"
       }
     }
