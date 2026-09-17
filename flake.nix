@@ -264,6 +264,7 @@
         ripgrep
         fd
         duf
+        # pantheon-studio is not exported by the pinned soltros-nixpkgs overlay.
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
@@ -327,6 +328,7 @@
           ./modules/unsecure-packages.nix
           ./modules/ssh-server.nix
           ./modules/virtualization-support.nix
+	  ./modules/docker-support.nix
           ./modules/muse-code.nix
 	  ./modules/plymouth-theme.nix
           ./hardware-configuration.nix
