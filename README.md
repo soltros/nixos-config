@@ -91,8 +91,8 @@ features:
 
 ## Desktop Environment
 
-- X11 windowing system
-- Pantheon desktop environment
+- Budgie Wayland session (Labwc compositor)
+- Budgie desktop environment
 - LightDM display manager
 - PipeWire audio with ALSA and PulseAudio compatibility
 - Flatpak support
@@ -142,7 +142,6 @@ Installed via `derriks-apps.nix`:
 - lxrandr
 - pinta
 - virt-manager
-- pantheon-tweaks
 - gh
 - lazygit
 
@@ -194,4 +193,19 @@ service and interactive CLI can share credentials.
 cd /home/derrik/nixos-config
 git pull
 nfu-rebuild
+```
+
+## Budgie branch
+
+Based on `laptop_pantheon`, preserving its hardware and application configuration.
+Budgie is the default login session. GNOME Software is enabled alongside Flatpak.
+Adapta GTK and Papirus-Dark icons are installed and configured as desktop and
+LightDM defaults. Existing per-user theme choices take precedence over desktop
+defaults; these settings remain editable in Budgie Desktop Settings.
+
+Validate without rebuilding or activating the system:
+
+```sh
+nix flake check --no-build
+nix eval --raw .#nixosConfigurations.i3-1315u.config.system.build.toplevel.drvPath
 ```

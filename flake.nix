@@ -12,13 +12,9 @@
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    voxtype = {
-      url = "github:peteonrails/voxtype/v0.7.5";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, voxtype, ... }@inputs: 
+  outputs = { self, nixpkgs, hermes-agent, antigravity-nix, ... }@inputs:
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -150,7 +146,7 @@
         pulse.enable = true;
       };
 
-      # Hardware and uinput for typing emulation / voxtype
+      # Hardware and uinput for typing emulation
       hardware.uinput.enable = true;
       programs.ydotool.enable = true;
 
@@ -230,8 +226,6 @@
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
-        voxtype.packages.x86_64-linux.vulkan
-        voxtype.packages.x86_64-linux.osd-gtk4
         wtype
         wl-clipboard
         ydotool
@@ -258,7 +252,7 @@
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/pantheon-desktop.nix
+          ./modules/budgie-desktop.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
@@ -284,7 +278,7 @@
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/pantheon-desktop.nix
+          ./modules/budgie-desktop.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
