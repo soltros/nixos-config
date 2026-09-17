@@ -252,7 +252,7 @@
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/budgie-desktop.nix
+          ./modules/gnome-desktop.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
@@ -278,7 +278,7 @@
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/budgie-desktop.nix
+          ./modules/gnome-desktop.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix

@@ -91,9 +91,8 @@ features:
 
 ## Desktop Environment
 
-- Budgie Wayland session (Labwc compositor)
-- Budgie desktop environment
-- LightDM display manager
+- GNOME Shell on Wayland
+- GDM display manager
 - PipeWire audio with ALSA and PulseAudio compatibility
 - Flatpak support
 - CUPS printing support
@@ -195,13 +194,13 @@ git pull
 nfu-rebuild
 ```
 
-## Budgie branch
+## GNOME branch
 
-Based on `laptop_pantheon`, preserving its hardware and application configuration.
-Budgie is the default login session. GNOME Software is enabled alongside Flatpak.
-Adapta GTK and Papirus-Dark icons are installed and configured as desktop and
-LightDM defaults. Existing per-user theme choices take precedence over desktop
-defaults; these settings remain editable in Budgie Desktop Settings.
+Based on `laptop_budgie`, preserving its hardware, power management, and
+application configuration. GNOME Shell on Wayland is the default GDM session.
+GNOME Software is enabled alongside the existing Flatpak support. Papirus-Dark
+icons are installed and configured as the default through dconf. Existing
+per-user icon choices take precedence; this default is not locked.
 
 Validate without rebuilding or activating the system:
 
