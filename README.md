@@ -113,3 +113,9 @@ Validate without rebuilding or activating the system:
 nix flake check --no-build
 nix eval --raw .#nixosConfigurations.b450m-d3sh.config.system.build.toplevel.drvPath
 ```
+
+Desktop parity: merged `master` at `53e4f82` and synchronized dependency pins
+with the main checkout's lockfile on 2026-09-17, excluding the removed dictation
+input. Hardware, power management, services, and shared modules match master;
+Budgie replaces Pantheon. BrowserOS, flakebuilder, and nixboutique inherited
+from desktop_pantheon remain available.
