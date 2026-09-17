@@ -260,7 +260,7 @@
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
           ./modules/apps.nix
-          ./modules/budgie-desktop.nix
+          ./modules/gnome-desktop.nix
           ./modules/plymouth-theme.nix
           ./modules/derriks-apps.nix
           ./modules/durandal-hermes-skin.nix

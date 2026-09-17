@@ -34,9 +34,9 @@ Desktop configuration for Derrik's AMD desktop. Single host, no laptop reference
 
 # Desktop
 
-- Budgie desktop environment on Wayland
-- LightDM display manager
-- Default theme: Adapta GTK and Papirus-Dark icons
+- GNOME Shell on Wayland
+- GDM display manager
+- Default icons: Papirus-Dark
 - Fonts: Inter, Open Sans, Roboto Mono, Hack, Noto, DejaVu, Fira Code
 - Flatpak support enabled
 
@@ -99,13 +99,13 @@ Desktop configuration for Derrik's AMD desktop. Single host, no laptop reference
 - nix-search: nix search nixpkgs
 - nix-lint: nix flake check
 
-## Budgie branch
+## GNOME branch
 
-Based on `desktop_pantheon`, preserving its hardware and application configuration.
-Budgie is the default login session. GNOME Software is enabled alongside Flatpak.
-Adapta GTK and Papirus-Dark icons are installed and configured as desktop and
-LightDM defaults. Existing per-user theme choices take precedence over desktop
-defaults; these settings remain editable in Budgie Desktop Settings.
+Based on `desktop_budgie`, preserving its hardware, power management, and
+application configuration. GNOME Shell on Wayland is the default GDM session.
+GNOME Software is enabled alongside the existing Flatpak support. Papirus-Dark
+icons are installed and configured as the default through dconf. Existing
+per-user icon choices take precedence; this default is not locked.
 
 Validate without rebuilding or activating the system:
 
@@ -113,9 +113,3 @@ Validate without rebuilding or activating the system:
 nix flake check --no-build
 nix eval --raw .#nixosConfigurations.b450m-d3sh.config.system.build.toplevel.drvPath
 ```
-
-Desktop parity: merged `master` at `53e4f82` and synchronized dependency pins
-with the main checkout's lockfile on 2026-09-17, excluding the removed dictation
-input. Hardware, power management, services, and shared modules match master;
-Budgie replaces Pantheon. BrowserOS, flakebuilder, and nixboutique inherited
-from desktop_pantheon remain available.
