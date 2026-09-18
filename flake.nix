@@ -230,6 +230,7 @@
         bat
         ripgrep
         fd
+	vpn-manager
         duf
 	flakebuilder
         waterfox
