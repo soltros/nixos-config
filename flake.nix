@@ -156,8 +156,8 @@
         addToSystemPackages = true;
         container.enable = false;
         settings = {
-          model.provider = "openai-codex";
-          model.default = "gpt-5.5";
+          model.provider = "nous";
+          model.default = "deepseek/deepseek-v4-pro";
           toolsets = [ "all" "skills" ];
           terminal = {
             backend = "local";
