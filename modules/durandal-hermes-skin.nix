@@ -481,7 +481,7 @@ in
 
   systemd.tmpfiles.rules = [
     "d /var/lib/hermes/.hermes/skins 2770 hermes hermes -"
-    "C+ /var/lib/hermes/.hermes/SOUL.md 0660 hermes hermes - ${durandalSoul}"
+    "L+ /var/lib/hermes/.hermes/SOUL.md - - - - ${durandalSoul}"
     "L+ /var/lib/hermes/.hermes/skins/durandal-marathon.yaml - - - - ${durandalMarathonSkin}"
   ];
 }
