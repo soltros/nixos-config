@@ -223,6 +223,7 @@
         ripgrep
         fd
         duf
+	quick-settings-tray
         antigravity-nix.packages.x86_64-linux.default
         antigravity-nix.packages.x86_64-linux.google-antigravity-ide
         antigravity-nix.packages.x86_64-linux.google-antigravity-cli
