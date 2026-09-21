@@ -205,6 +205,8 @@
       ];
 
       environment.systemPackages = with pkgs; [
+        # Hermes Desktop is a separate upstream flake output from the CLI package.
+        hermes-agent.packages.${pkgs.system}.desktop
         chatgpt
         waterfox
         eza
