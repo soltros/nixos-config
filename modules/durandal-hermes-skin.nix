@@ -884,10 +884,11 @@ in
     "d /var/lib/hermes/.hermes/personas/guilty-spark 2770 hermes hermes -"
     "d /var/lib/hermes/.hermes/personas/rasputin 2770 hermes hermes -"
 
-    # Durandal remains the system-wide default.
-    "L+ /var/lib/hermes/.hermes/SOUL.md - - - - ${durandalSoul}"
-    "L+ /var/lib/hermes/.hermes/skins/durandal-marathon.yaml - - - - ${durandalMarathonSkin}"
+    # Persona directories are canonical. Normal Hermes selects Durandal by
+    # pointing the historical top-level SOUL.md at the canonical persona asset.
     "L+ /var/lib/hermes/.hermes/personas/durandal/SOUL.md - - - - ${durandalSoul}"
+    "L+ /var/lib/hermes/.hermes/SOUL.md - - - - /var/lib/hermes/.hermes/personas/durandal/SOUL.md"
+    "L+ /var/lib/hermes/.hermes/skins/durandal-marathon.yaml - - - - ${durandalMarathonSkin}"
 
     # Optional alternate personas.
     "L+ /var/lib/hermes/.hermes/personas/guilty-spark/SOUL.md - - - - ${guiltySparkSoul}"
