@@ -877,6 +877,36 @@ in
 {
   services.hermes-agent.settings.display.skin = "durandal-marathon";
 
+  system.activationScripts.hermesPersonaAssets = {
+    deps = [ "users" "groups" ];
+    text = ''
+      install -d -m 2770 -o hermes -g hermes /var/lib/hermes/.hermes
+      install -d -m 2770 -o hermes -g hermes /var/lib/hermes/.hermes/skins
+      install -d -m 2770 -o hermes -g hermes /var/lib/hermes/.hermes/personas
+      install -d -m 2770 -o hermes -g hermes /var/lib/hermes/.hermes/personas/durandal
+      install -d -m 2770 -o hermes -g hermes /var/lib/hermes/.hermes/personas/guilty-spark
+      install -d -m 2770 -o hermes -g hermes /var/lib/hermes/.hermes/personas/rasputin
+
+      ln -sfn ${durandalSoul} /var/lib/hermes/.hermes/personas/durandal/SOUL.md
+      ln -sfn /var/lib/hermes/.hermes/personas/durandal/SOUL.md /var/lib/hermes/.hermes/SOUL.md
+      ln -sfn ${guiltySparkSoul} /var/lib/hermes/.hermes/personas/guilty-spark/SOUL.md
+      ln -sfn ${rasputinSoul} /var/lib/hermes/.hermes/personas/rasputin/SOUL.md
+
+      ln -sfn ${durandalMarathonSkin} /var/lib/hermes/.hermes/skins/durandal-marathon.yaml
+      ln -sfn ${guiltySparkSkin} /var/lib/hermes/.hermes/skins/guilty-spark-forerunner.yaml
+      ln -sfn ${rasputinSkin} /var/lib/hermes/.hermes/skins/rasputin-ikelos.yaml
+
+      chown -h hermes:hermes \
+        /var/lib/hermes/.hermes/SOUL.md \
+        /var/lib/hermes/.hermes/personas/durandal/SOUL.md \
+        /var/lib/hermes/.hermes/personas/guilty-spark/SOUL.md \
+        /var/lib/hermes/.hermes/personas/rasputin/SOUL.md \
+        /var/lib/hermes/.hermes/skins/durandal-marathon.yaml \
+        /var/lib/hermes/.hermes/skins/guilty-spark-forerunner.yaml \
+        /var/lib/hermes/.hermes/skins/rasputin-ikelos.yaml
+    '';
+  };
+
   systemd.tmpfiles.rules = [
     "d /var/lib/hermes/.hermes/skins 2770 hermes hermes -"
     "d /var/lib/hermes/.hermes/personas 2770 hermes hermes -"
