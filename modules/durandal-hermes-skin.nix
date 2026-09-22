@@ -873,9 +873,90 @@ let
       [#FF8800]                 WARMIND PROTOCOL // TELEMETRY ACTIVE[/]
   '';
 
+
+  hermesSetup = pkgs.writeShellApplication {
+    name = "hermes-setup";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.sudo
+    ];
+    text = ''
+      set -euo pipefail
+
+      if [ "''${EUID:-$(id -u)}" -ne 0 ]; then
+        exec sudo "$0" "$@"
+      fi
+
+      hermes_home=/var/lib/hermes/.hermes
+
+      echo "Setting up Hermes persona assets..."
+
+      install -d -m 2770 -o hermes -g hermes "$hermes_home"
+      install -d -m 2770 -o hermes -g hermes "$hermes_home/skins"
+      install -d -m 2770 -o hermes -g hermes "$hermes_home/personas"
+      install -d -m 2770 -o hermes -g hermes "$hermes_home/personas/durandal"
+      install -d -m 2770 -o hermes -g hermes "$hermes_home/personas/guilty-spark"
+      install -d -m 2770 -o hermes -g hermes "$hermes_home/personas/rasputin"
+
+      ln -sfn ${durandalSoul} "$hermes_home/personas/durandal/SOUL.md"
+      ln -sfn ${guiltySparkSoul} "$hermes_home/personas/guilty-spark/SOUL.md"
+      ln -sfn ${rasputinSoul} "$hermes_home/personas/rasputin/SOUL.md"
+
+      ln -sfn "$hermes_home/personas/durandal/SOUL.md" "$hermes_home/SOUL.md"
+
+      ln -sfn ${durandalMarathonSkin} "$hermes_home/skins/durandal-marathon.yaml"
+      ln -sfn ${guiltySparkSkin} "$hermes_home/skins/guilty-spark-forerunner.yaml"
+      ln -sfn ${rasputinSkin} "$hermes_home/skins/rasputin-ikelos.yaml"
+
+      chown -h hermes:hermes \
+        "$hermes_home/SOUL.md" \
+        "$hermes_home/personas/durandal/SOUL.md" \
+        "$hermes_home/personas/guilty-spark/SOUL.md" \
+        "$hermes_home/personas/rasputin/SOUL.md" \
+        "$hermes_home/skins/durandal-marathon.yaml" \
+        "$hermes_home/skins/guilty-spark-forerunner.yaml" \
+        "$hermes_home/skins/rasputin-ikelos.yaml"
+
+      required=(
+        "$hermes_home/SOUL.md"
+        "$hermes_home/personas/durandal/SOUL.md"
+        "$hermes_home/personas/guilty-spark/SOUL.md"
+        "$hermes_home/personas/rasputin/SOUL.md"
+        "$hermes_home/skins/durandal-marathon.yaml"
+        "$hermes_home/skins/guilty-spark-forerunner.yaml"
+        "$hermes_home/skins/rasputin-ikelos.yaml"
+      )
+
+      failed=0
+      for path in "''${required[@]}"; do
+        if [ -r "$path" ]; then
+          printf '[ OK ] %s -> %s\n' "$path" "$(readlink -f "$path")"
+        else
+          printf '[FAIL] %s\n' "$path" >&2
+          failed=1
+        fi
+      done
+
+      if [ "$failed" -ne 0 ]; then
+        echo "Hermes persona setup failed verification." >&2
+        exit 1
+      fi
+
+      echo
+      echo "Hermes personas are ready."
+      echo "Default: Durandal"
+      echo "Try: spark"
+      echo "Try: rasputin"
+    '';
+  };
+
 in
 {
   services.hermes-agent.settings.display.skin = "durandal-marathon";
+
+  environment.systemPackages = [ hermesSetup ];
+
+  programs.zsh.shellAliases.hermes-setup-personas = "hermes-setup";
 
   system.activationScripts.hermesPersonaAssets = {
     deps = [ "users" "groups" ];
