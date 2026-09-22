@@ -105,6 +105,26 @@
         "type": "github"
       }
     },
+    "nix-ai-setup": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790044701,
+        "narHash": "sha256-DfIf34V9lGYBFUFEFi/BsmsIsbI8fu9T0xMeC0yRd4U=",
+        "owner": "soltros",
+        "repo": "nix_ai_setup",
+        "rev": "5a66e1c843ab545388f0cde2f660cd648a58bcb2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soltros",
+        "repo": "nix_ai_setup",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1785318670,
@@ -212,6 +232,7 @@
       "inputs": {
         "antigravity-nix": "antigravity-nix",
         "hermes-agent": "hermes-agent",
+        "nix-ai-setup": "nix-ai-setup",
         "nixpkgs": "nixpkgs_2",
         "soltros-nixpkgs": "soltros-nixpkgs"
       }
