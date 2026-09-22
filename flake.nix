@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-ai-setup = {
+      url = "github:soltros/nix_ai_setup";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     soltros-nixpkgs = {
       url = "github:soltros/soltros_nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -231,6 +235,8 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+          inputs.nix-ai-setup.nixosModules.default
+          { services.nix-ai-setup.enable = true; }
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
           ./modules/lomiri.nix
