@@ -245,30 +245,6 @@
     };
   in {
     nixosConfigurations = {
-      "b450m-d3sh" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          hermes-agent.nixosModules.default
-          ./modules/amdgpu.nix
-          ./modules/derriks-apps.nix
-          ./modules/durandal-hermes-skin.nix
-          ./modules/gamemode.nix
-          ./modules/plasma-desktop.nix
-          ./modules/steam.nix
-          ./modules/tailscale-support.nix
-          ./modules/unsecure-packages.nix
-          ./modules/ssh-server.nix
-          ./modules/virtualization-support.nix
-          ./modules/muse-code.nix
-          ./hardware-configuration.nix
-          shared
-          ({ config, pkgs, ... }: {
-            networking.hostName = "b450m-d3sh";
-            hardware.amd.enable = true;
-          })
-        ];
-      };
       "i3-1315u" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
