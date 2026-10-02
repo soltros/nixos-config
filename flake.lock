@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788333488,
-        "narHash": "sha256-v9r7mR2EHu+oHBv4c4oNYIz2532nSN6TePC/lWngaOI=",
+        "lastModified": 1789629442,
+        "narHash": "sha256-ezDyaB9O4n4q3IKTosP94HCz6PvgNRAJ91SiDRnsbYg=",
         "owner": "jacopone",
         "repo": "antigravity-nix",
-        "rev": "f7cd0ba50f447b1baa88cbd379e3256a92876279",
+        "rev": "ad1fcd9b44818f7c815e40d0cb1a01114d40f67a",
         "type": "github"
       },
       "original": {
@@ -60,24 +60,6 @@
         "type": "github"
       }
     },
-    "flake-utils_2": {
-      "inputs": {
-        "systems": "systems_2"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "hermes-agent": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -89,11 +71,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1788371757,
-        "narHash": "sha256-h+ktaKBUX+0+IqYSOUy8jrpIjHGvitwpH5dJ8cK1G8Q=",
+        "lastModified": 1790971041,
+        "narHash": "sha256-OPdI3SM7g5VsOQelDL872n8RNalA8n+dl6IzZBUmOQc=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "1cb3ab617363ffab9e55239a7d2ab0d6f9c10473",
+        "rev": "bed0d535556b5b0a2bdd6fd3a74162ad5f860ca1",
         "type": "github"
       },
       "original": {
@@ -161,11 +143,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1788179007,
-        "narHash": "sha256-hn1oU2rue2SYK8dAr8+WNZWtbsz1S2W5mnHlSEuh3bo=",
+        "lastModified": 1789546076,
+        "narHash": "sha256-zVxLZiSnmaaPLwnhj7pwmqe3axBg/C6nG5JZsJMh2g4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "34ab99075ac4f7e40cf037eef32cb1c360bb85e9",
+        "rev": "b1b875982b17dabde9b4a37f3e229e74913e6db3",
         "type": "github"
       },
       "original": {
@@ -252,8 +234,7 @@
         "hermes-agent": "hermes-agent",
         "nix-ai-setup": "nix-ai-setup",
         "nixpkgs": "nixpkgs_2",
-        "soltros-nixpkgs": "soltros-nixpkgs",
-        "voxtype": "voxtype"
+        "soltros-nixpkgs": "soltros-nixpkgs"
       }
     },
     "soltros-nixpkgs": {
@@ -263,11 +244,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788730878,
-        "narHash": "sha256-Bi+yPwWxV+3bKe9ODH41jupO0dbeuY1xD5b7KO8gmqY=",
+        "lastModified": 1789660463,
+        "narHash": "sha256-oKRmtU8sOakCTxqzJR+1blg2YvJCMUlGFQCXlj2DSVs=",
         "owner": "soltros",
         "repo": "soltros_nixpkgs",
-        "rev": "af8224436977861367fae3864e56335729d20687",
+        "rev": "0d6dfe1081f7f1746327ee2ebb989a0f08985081",
         "type": "github"
       },
       "original": {
@@ -277,21 +258,6 @@
       }
     },
     "systems": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -328,28 +294,6 @@
       "original": {
         "owner": "pyproject-nix",
         "repo": "uv2nix",
-        "type": "github"
-      }
-    },
-    "voxtype": {
-      "inputs": {
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1780004034,
-        "narHash": "sha256-zsOG1mBTXN4gdsTb1pUPKXATfhV5ZjgEsIUk07asaGo=",
-        "owner": "peteonrails",
-        "repo": "voxtype",
-        "rev": "8d49248baa53f29cb33007c9625a37281c72e799",
-        "type": "github"
-      },
-      "original": {
-        "owner": "peteonrails",
-        "ref": "v0.7.5",
-        "repo": "voxtype",
         "type": "github"
       }
     }

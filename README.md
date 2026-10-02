@@ -34,14 +34,11 @@ Desktop configuration for Derrik's AMD desktop. Single host, no laptop reference
 
 # Desktop
 
-- Pantheon desktop environment on Wayland
-- LightDM display manager
-- Custom dock favorites via dconf
-- Custom theme: Papirus-Dark icons, Blueberry GTK, elementary cursor
+- GNOME Shell on Wayland
+- GDM display manager
+- Default icons: Papirus-Dark
 - Fonts: Inter, Open Sans, Roboto Mono, Hack, Noto, DejaVu, Fira Code
 - Flatpak support enabled
-- Custom keybinding: Voxtype dictation toggle on KP_Add
-- Voxtype installed (Vulkan + OSD GTK4)
 
 # Audio
 
@@ -74,8 +71,8 @@ Desktop configuration for Derrik's AMD desktop. Single host, no laptop reference
 # Packages
 
 - Antigravity IDE and CLI
-- Voxtype (Vulkan + OSD GTK4)
 - Waterfox
+- BrowserOS
 - Steam, Heroic Games Launcher
 - Bitwarden, Discord, Signal, Fluffychat, Telegram
 - VLC, GIMP, Spotify, LibreOffice
@@ -102,3 +99,14 @@ Desktop configuration for Derrik's AMD desktop. Single host, no laptop reference
 - ngc: nix-collect-garbage -d
 - nix-search: nix search nixpkgs
 - nix-lint: nix flake check
+
+## Plasma branch
+
+KDE Plasma 6 on Wayland is the default session with SDDM display manager. Breeze-Dark theme and Papirus-Dark icons are configured, along with Catppuccin Mocha Plymouth boot splash.
+
+Validate without rebuilding or activating the system:
+
+```sh
+nix flake check --no-build
+nix eval --raw .#nixosConfigurations.b450m-d3sh.config.system.build.toplevel.drvPath
+```
