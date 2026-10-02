@@ -284,6 +284,7 @@
           ./modules/ssh-server.nix
           ./modules/virtualization-support.nix
           ./modules/muse-code.nix
+	  ./modules/docker-support.nix
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {
