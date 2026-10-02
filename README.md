@@ -91,9 +91,8 @@ features:
 
 ## Desktop Environment
 
-- X11 windowing system
-- Pantheon desktop environment
-- LightDM display manager
+- KDE Plasma 6 on Wayland
+- SDDM display manager
 - PipeWire audio with ALSA and PulseAudio compatibility
 - Flatpak support
 - CUPS printing support
@@ -104,6 +103,8 @@ Installed via `derriks-apps.nix`:
 
 - bitwarden-desktop
 - git
+- cargo
+- mpv
 - python312
 - btrfs-progs
 - appimage-run
@@ -142,7 +143,6 @@ Installed via `derriks-apps.nix`:
 - lxrandr
 - pinta
 - virt-manager
-- pantheon-tweaks
 - gh
 - lazygit
 
@@ -194,4 +194,15 @@ service and interactive CLI can share credentials.
 cd /home/derrik/nixos-config
 git pull
 nfu-rebuild
+```
+
+## Plasma branch
+
+KDE Plasma 6 on Wayland is the default session with SDDM display manager. Breeze-Dark theme and Papirus-Dark icons are configured, along with Catppuccin Mocha Plymouth boot splash.
+
+Validate without rebuilding or activating the system:
+
+```sh
+nix flake check --no-build
+nix eval --raw .#nixosConfigurations.i3-1315u.config.system.build.toplevel.drvPath
 ```

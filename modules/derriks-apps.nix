@@ -5,6 +5,8 @@
   environment.systemPackages = with pkgs; [
     bitwarden-desktop
     git
+    cargo
+    mpv
     python312
     btrfs-progs
     appimage-run
