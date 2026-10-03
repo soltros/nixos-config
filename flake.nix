@@ -204,6 +204,7 @@
           nfu = "sudo nix flake update --flake /home/derrik/nixos-config";
           nfu-rebuild = "cd /home/derrik/nixos-config && sudo ./deploy.sh";
           ngc = "sudo nix-collect-garbage -d";
+          alises = "cat /etc/zshrc | grep alias";
           nix-search = "nix search nixpkgs";
           nix-lint = "nix flake check --flake /home/derrik/nixos-config";
           # Replacements for common utilities
