@@ -102,7 +102,7 @@ Desktop configuration for Derrik's AMD desktop. Single host, no laptop reference
 
 ## Plasma branch
 
-KDE Plasma 6 on Wayland is the default session with SDDM display manager. Breeze-Dark theme and Papirus-Dark icons are configured, along with Catppuccin Mocha Plymouth boot splash.
+KDE Plasma 6 on Wayland is the default session with SDDM display manager. Catppuccin Mocha Blue theme, Catppuccin Mocha dark cursors, and Papirus-Dark icons are configured, along with Catppuccin Mocha Plymouth boot splash.
 
 Validate without rebuilding or activating the system:
 

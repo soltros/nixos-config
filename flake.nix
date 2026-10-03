@@ -204,7 +204,9 @@
           nfu = "sudo nix flake update --flake /home/derrik/nixos-config";
           nfu-rebuild = "cd /home/derrik/nixos-config && sudo ./deploy.sh";
           ngc = "sudo nix-collect-garbage -d";
-          alises = "cat /etc/zshrc | grep alias";
+          alias-help = "(printf \"ALIAS\\tCOMMAND\\n\"; sed -nE \"s/^alias -- ([^=]+)='(.*)'$/\\1\\t\\2/p; s/^alias -- ([^=]+)=([^'].*)$/\\1\\t\\2/p\" /etc/zshrc) | column -t -s $'\\t' -o '  →  '";
+          aliases = "alias-help";
+          alises = "alias-help";
           nix-search = "nix search nixpkgs";
           nix-lint = "nix flake check --flake /home/derrik/nixos-config";
           # Replacements for common utilities

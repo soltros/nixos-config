@@ -5,15 +5,25 @@
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.theme = "catppuccin-mocha-blue";
+
+  environment.systemPackages = with pkgs; [
+    (catppuccin-kde.override { flavour = [ "mocha" ]; accents = [ "blue" ]; })
+    (catppuccin-gtk.override { accents = [ "blue" ]; variant = "mocha"; })
+    catppuccin-cursors.mochaDark
+    (catppuccin-kvantum.override { accent = "blue"; variant = "mocha"; })
+    (catppuccin-sddm.override { flavor = "mocha"; accent = "blue"; })
+  ];
 
   systemd.user.services.set-plasma-settings = {
-    description = "Configure KDE Plasma dark theme, Papirus icons, fonts, and shortcuts";
+    description = "Configure KDE Plasma Catppuccin Mocha theme, Papirus icons, fonts, and shortcuts";
     wantedBy = [ "graphical-session.target" ];
     restartIfChanged = true;
     serviceConfig.Type = "oneshot";
     path = with pkgs; [
       kdePackages.kconfig
       kdePackages.kservice
+      kdePackages.plasma-workspace
       coreutils
       dconf
       desktop-file-utils
@@ -21,16 +31,22 @@
     script = ''
       KWRITE="${pkgs.kdePackages.kconfig}/bin/kwriteconfig6"
 
-      # 1. Dark Color Scheme & Plasma Theme
-      $KWRITE --file kdeglobals --group General --key ColorScheme "BreezeDark"
-      $KWRITE --file plasmarc --group Theme --key name "breeze-dark"
+      # 1. Catppuccin Mocha Color Scheme, Plasma Theme & Look-and-Feel
+      $KWRITE --file kdeglobals --group General --key ColorScheme "CatppuccinMochaBlue"
+      $KWRITE --file kdeglobals --group KDE --key LookAndFeelPackage "Catppuccin-Mocha-Blue"
+      $KWRITE --file plasmarc --group Theme --key name "Catppuccin-Mocha-Blue"
+      $KWRITE --file kwinrc --group org.kde.kdecoration2 --key theme "__aurorae__svg__CatppuccinMocha-Modern"
+      $KWRITE --file kwinrc --group org.kde.kdecoration2 --key library "org.kde.kwin.aurorae"
+
+      plasma-apply-colorscheme CatppuccinMochaBlue || true
 
       # 2. Papirus-Dark Icons
       $KWRITE --file kdeglobals --group Icons --key Theme "Papirus-Dark"
 
-      # 3. Cursor theme and size
-      $KWRITE --file kcminputrc --group Mouse --key cursorTheme "breeze_cursors"
+      # 3. Catppuccin Mocha Cursor theme and size
+      $KWRITE --file kcminputrc --group Mouse --key cursorTheme "catppuccin-mocha-dark-cursors"
       $KWRITE --file kcminputrc --group Mouse --key cursorSize 24
+      plasma-apply-cursortheme catppuccin-mocha-dark-cursors || true
 
       # 4. Fonts
       $KWRITE --file kdeglobals --group General --key font "Inter,9,-1,5,50,0,0,0,0,0"
@@ -39,22 +55,24 @@
       $KWRITE --file kdeglobals --group General --key toolBarFont "Inter,9,-1,5,50,0,0,0,0,0"
       $KWRITE --file kdeglobals --group General --key menuFont "Inter,9,-1,5,50,0,0,0,0,0"
 
-      # 5. GTK 3 & 4 dark theme, fonts, and Papirus-Dark icons
+      # 5. GTK 3 & 4 Catppuccin Mocha theme, fonts, and Papirus-Dark icons
       mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"
       cat << 'EOF' > "$HOME/.config/gtk-3.0/settings.ini"
 [Settings]
-gtk-theme-name=Breeze-Dark
+gtk-theme-name=catppuccin-mocha-blue-standard
 gtk-icon-theme-name=Papirus-Dark
 gtk-font-name=Inter 9
-gtk-cursor-theme-name=breeze_cursors
+gtk-cursor-theme-name=catppuccin-mocha-dark-cursors
 gtk-cursor-theme-size=24
 gtk-application-prefer-dark-theme=1
 EOF
       cp -f "$HOME/.config/gtk-3.0/settings.ini" "$HOME/.config/gtk-4.0/settings.ini"
 
       /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'" || true
-      /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/gtk-theme "'Breeze-Dark'" || true
+      /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/gtk-theme "'catppuccin-mocha-blue-standard'" || true
       /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/icon-theme "'Papirus-Dark'" || true
+      /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/cursor-theme "'catppuccin-mocha-dark-cursors'" || true
+      /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/cursor-size 24 || true
       /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/font-name "'Inter 9'" || true
       /run/current-system/sw/bin/dconf write /org/gnome/desktop/interface/monospace-font-name "'Roboto Mono 10'" || true
 
