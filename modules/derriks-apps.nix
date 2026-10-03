@@ -10,6 +10,7 @@
     python312
     btrfs-progs
     appimage-run
+    pkgs.kdePackages.partitionmanager
     papirus-icon-theme
     libreoffice-qt
     spotify
