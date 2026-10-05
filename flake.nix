@@ -11,6 +11,10 @@
       url = "github:soltros/soltros_nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    plasma-mediacenter = {
+      url = "github:soltros/plasma-mediacenter/prototype/phase-1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hermes-agent.url = "github:NousResearch/hermes-agent";
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
@@ -226,6 +230,7 @@
       nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = [
         inputs.soltros-nixpkgs.overlays.default
+        inputs.plasma-mediacenter.overlays.default
       ];
 
       environment.systemPackages = with pkgs; [
@@ -252,6 +257,7 @@
         ydotool
         dotool
         papirus-icon-theme
+        plasma-mediacenter
         zsh-autosuggestions
         # lmstudio # removed for Hermes OpenCode setup
       ];
