@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     plasma-mediacenter = {
-      url = "github:soltros/plasma-mediacenter/prototype/phase-1";
+      url = "github:soltros/plasma-mediacenter?ref=prototype/phase-1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hermes-agent.url = "github:NousResearch/hermes-agent";
