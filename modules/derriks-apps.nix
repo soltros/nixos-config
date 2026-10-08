@@ -5,6 +5,8 @@
   environment.systemPackages = with pkgs; [
     bitwarden-desktop
     git
+    runelite
+    bolt-launcher
     cargo
     mpv
     python312
