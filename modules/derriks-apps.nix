@@ -9,6 +9,9 @@
     mpv
     python312
     btrfs-progs
+    bolt-launcher
+    runelite
+    nixpkger
     appimage-run
     papirus-icon-theme
     libreoffice-qt
