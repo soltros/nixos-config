@@ -12,5 +12,7 @@ in
     soltros.sharpemu
   
     usbutils
+  
+    pciutils
   ];
 }
