@@ -6,6 +6,8 @@
     bitwarden-desktop
     git
     runelite
+    fresh-editor
+    nixpkger
     bolt-launcher
     cargo
     mpv

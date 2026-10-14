@@ -289,6 +289,7 @@
           ./modules/virtualization-support.nix
           ./modules/muse-code.nix
 	  ./modules/docker-support.nix
+	  ./modules/bluetooth-support.nix
           ./hardware-configuration.nix
           shared
           ({ config, pkgs, ... }: {
