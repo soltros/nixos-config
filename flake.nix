@@ -83,6 +83,23 @@
 
       networking.networkmanager.enable = true;
 
+      # Xbox Series X|S Bluetooth controller pairing and input support.
+      hardware.bluetooth = {
+        enable = true;
+        powerOnBoot = true;
+        settings.General = {
+          ControllerMode = "dual";
+          Privacy = "device";
+          JustWorksRepairing = "confirm";
+        };
+      };
+      hardware.xpadneo.enable = true;
+      # Compatibility workaround for Xbox controller Bluetooth reconnect loops.
+      boot.extraModprobeConfig = ''
+        options bluetooth disable_ertm=Y
+      '';
+
+
       time.timeZone = "America/Detroit";
 
       i18n.defaultLocale = "en_US.UTF-8";
