@@ -91,6 +91,16 @@
 
       networking.networkmanager.enable = true;
 
+      # Xbox Series X|S controller Bluetooth support.
+      hardware.bluetooth.enable = true;
+      hardware.bluetooth.powerOnBoot = true;
+      hardware.bluetooth.settings.General.ControllerMode = "dual";
+      hardware.xpadneo.enable = true;
+      boot.extraModprobeConfig = ''
+        options bluetooth disable_ertm=Y
+      '';
+
+
       time.timeZone = "America/Detroit";
 
       i18n.defaultLocale = "en_US.UTF-8";
