@@ -6,5 +6,7 @@
     xenia
   
     htop
+  
+    brave
   ];
 }
