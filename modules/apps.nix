@@ -12,5 +12,7 @@
     openscad
   
     retroarch
+  
+    rpcs3
   ];
 }
