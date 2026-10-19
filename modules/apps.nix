@@ -10,5 +10,7 @@
     brave
   
     openscad
+  
+    retroarch
   ];
 }
