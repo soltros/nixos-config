@@ -8,5 +8,7 @@
     htop
   
     brave
+  
+    openscad
   ];
 }
