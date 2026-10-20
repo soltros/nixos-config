@@ -154,6 +154,18 @@
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
+
+
+        # RPCS3 audio stability: 48 kHz / 1024 frames (~21.3 ms).
+        extraConfig.pipewire."90-rpcs3-audio-stability" = {
+          "context.properties" = {
+            "default.clock.rate" = 48000;
+            "default.clock.allowed-rates" = [ 48000 ];
+            "default.clock.quantum" = 1024;
+            "default.clock.min-quantum" = 1024;
+            "default.clock.max-quantum" = 1024;
+          };
+        };
       };
 
       # Hardware and uinput for typing emulation
