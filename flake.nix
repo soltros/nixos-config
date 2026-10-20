@@ -291,8 +291,9 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          inputs.nix-ai-setup.nixosModules.default
-          { services.nix-ai-setup.enable = true; }
+          # Temporarily disabled nix-ai-setup; uncomment both lines to restore.
+          # inputs.nix-ai-setup.nixosModules.default
+          # { services.nix-ai-setup.enable = true; }
           hermes-agent.nixosModules.default
           ./modules/amdgpu.nix
           ./modules/apps.nix
