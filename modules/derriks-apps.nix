@@ -1,6 +1,8 @@
 { config, pkgs, ... }: 
 
 {
+  imports = [ ./fresh-theme.nix ];
+
   # Add packages to the system environment
   environment.systemPackages = with pkgs; [
     bitwarden-desktop
