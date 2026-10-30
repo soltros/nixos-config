@@ -92,6 +92,25 @@ EOF
       $KWRITE --file kglobalshortcutsrc --group "voxtype-toggle.desktop" --key "_k_friendly_name" "Voxtype Toggle Dictation"
       $KWRITE --file kglobalshortcutsrc --group "voxtype-toggle.desktop" --key "_launch" "KP_Add,none,Voxtype Toggle Dictation"
 
+      # 6b. TV Big Picture Mode Toggle Shortcut (Meta+F12)
+      cat << 'EOF' > "$HOME/.local/share/applications/tv-bigpicture-toggle.desktop"
+[Desktop Entry]
+Name=Toggle TV Big Picture Mode
+Comment=Toggle TCL TV 1080p@60Hz Steam Big Picture Mode and restore LG 1440p@144Hz + Acer 1080p@144Hz Desktop Mode
+Exec=/home/derrik/.local/bin/tv-bigpicture-toggle toggle
+Type=Application
+Terminal=false
+Icon=steam
+Categories=Game;Utility;
+NoDisplay=false
+StartupNotify=false
+X-KDE-Shortcuts=Meta+F12
+EOF
+
+      $KWRITE --file kglobalshortcutsrc --group "tv-bigpicture-toggle.desktop" --key "_k_friendly_name" "Toggle TV Big Picture Mode"
+      $KWRITE --file kglobalshortcutsrc --group "tv-bigpicture-toggle.desktop" --key "_launch" "Meta+F12,Meta+F12,Toggle TV Big Picture Mode"
+      $KWRITE --file kglobalshortcutsrc --group "services" --group "tv-bigpicture-toggle.desktop" --key "_launch" "Meta+F12"
+
       # 7. Durandal / Hermes Agent launcher (dedicated Marathon-styled Kitty terminal)
       mkdir -p "$HOME/.local/bin" "$HOME/.config/kitty" "$HOME/.local/share/applications" "$HOME/.local/share/icons/hicolor/scalable/apps"
 
