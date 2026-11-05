@@ -8,6 +8,7 @@
   services.displayManager.sddm.theme = "catppuccin-mocha-blue";
 
   environment.systemPackages = with pkgs; [
+    (pkgs.callPackage ./chatgpt-plasmoid { })
     (catppuccin-kde.override { flavour = [ "mocha" ]; accents = [ "blue" ]; })
     (catppuccin-gtk.override { accents = [ "blue" ]; variant = "mocha"; })
     catppuccin-cursors.mochaDark
