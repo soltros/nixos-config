@@ -287,6 +287,7 @@
           ./modules/muse-code.nix
 	  ./modules/plymouth-theme.nix
           ./hardware-configuration.nix
+          ./modules/appimage.nix
           shared
           ({ config, pkgs, ... }: {
             networking.hostName = "i3-1315u";
