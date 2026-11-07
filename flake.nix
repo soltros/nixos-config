@@ -297,6 +297,7 @@
           ./modules/virtualization-support.nix
           ./modules/muse-code.nix
           ./hardware-configuration.nix
+          ./modules/appimage.nix
           shared
           ({ config, pkgs, ... }: {
             networking.hostName = "i3-1315u";
