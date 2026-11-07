@@ -298,6 +298,7 @@
           ./modules/virtualization-support.nix
           ./modules/muse-code.nix
           ./hardware-configuration.nix
+          ./modules/appimage.nix
           shared
           ({ config, pkgs, ... }: {
             networking.hostName = "b450m-d3sh";
