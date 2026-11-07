@@ -7,7 +7,6 @@
       url = "github:soltros/soltros_nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hermes-agent.url = "github:NousResearch/hermes-agent";
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,7 +17,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, unity-on-nix, hermes-agent, antigravity-nix, ... }@inputs: 
+  outputs = { self, nixpkgs, unity-on-nix, antigravity-nix, ... }@inputs: 
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -129,22 +128,6 @@
 
       environment.sessionVariables.PATH = [ "/home/derrik/.cargo/bin" ];
 
-      # Enable Hermes Agent
-      services.hermes-agent = {
-        enable = true;
-        addToSystemPackages = true;
-        container.enable = false;
-        settings = {
-          model.provider = "nous";
-          model.default = "deepseek/deepseek-v4-pro";
-          toolsets = [ "all" "skills" ];
-          terminal = {
-            backend = "local";
-            timeout = 180;
-          };
-        };
-        environmentFiles = [ "/run/secrets/hermes-env" ];
-      };
 
       # Configure keymap in X11
       services.xserver.xkb = {
@@ -197,15 +180,12 @@
       users.users."derrik" = {
         isNormalUser = true;
         description = "Derrik Diener";
-        extraGroups = [ "networkmanager" "wheel" "hermes" "input" "uinput" ];
+        extraGroups = [ "networkmanager" "wheel" "input" "uinput" ];
         shell = pkgs.zsh;
         packages = [];
       };
 
       systemd.tmpfiles.rules = [
-        # The module keeps auth.json private by default; permit interactive
-        # members of the hermes group to use the shared CLI credentials.
-        "z /var/lib/hermes/.hermes/auth.json 0660 hermes hermes -"
         "d /data/workspace 0755 derrik users -"
       ];
 
@@ -248,8 +228,6 @@
       ];
 
       environment.systemPackages = with pkgs; [
-        # Hermes Desktop is a separate upstream flake output from the CLI package.
-        hermes-agent.packages.${pkgs.system}.desktop
         chatgpt
         waterfox
         eza
@@ -281,14 +259,12 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          hermes-agent.nixosModules.default
           unity-on-nix.nixosModules.default
           ./modules/unity-desktop.nix
           ./modules/amdgpu.nix
           ./modules/intelgpu.nix
           ./modules/intel-firmware.nix
           ./modules/derriks-apps.nix
-          ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
