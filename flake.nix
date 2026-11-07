@@ -15,14 +15,13 @@
       url = "github:soltros/unity-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hermes-agent.url = "github:NousResearch/hermes-agent";
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, unity-on-nix, hermes-agent, antigravity-nix, ... }@inputs:
+  outputs = { self, nixpkgs, unity-on-nix, antigravity-nix, ... }@inputs:
   let
     shared = { config, pkgs, ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -119,21 +118,6 @@
 
       environment.sessionVariables.PATH = [ "/home/derrik/.cargo/bin" ];
 
-      services.hermes-agent = {
-        enable = true;
-        addToSystemPackages = true;
-        container.enable = false;
-        settings = {
-          model.provider = "nous";
-          model.default = "deepseek/deepseek-v4-pro";
-          toolsets = [ "all" "skills" ];
-          terminal = {
-            backend = "local";
-            timeout = 180;
-          };
-        };
-        environmentFiles = [ "/run/secrets/hermes-env" ];
-      };
 
       services.xserver.xkb = {
         layout = "us";
@@ -181,15 +165,12 @@
       users.users."derrik" = {
         isNormalUser = true;
         description = "Derrik Diener";
-        extraGroups = [ "networkmanager" "wheel" "hermes" "input" "uinput" "video" "render" ];
+        extraGroups = [ "networkmanager" "wheel" "input" "uinput" "video" "render" ];
         shell = pkgs.zsh;
         packages = [];
       };
 
       systemd.tmpfiles.rules = [
-        # The module keeps auth.json private by default; permit interactive
-        # members of the hermes group to use the shared CLI credentials.
-        "z /var/lib/hermes/.hermes/auth.json 0660 hermes hermes -"
         "d /data/workspace 0755 derrik users -"
       ];
 
@@ -231,8 +212,6 @@
       ];
 
       environment.systemPackages = with pkgs; [
-        # Hermes Desktop is a separate upstream flake output from the CLI package.
-        hermes-agent.packages.${pkgs.system}.desktop
         chatgpt
         waterfox
         eza
@@ -249,7 +228,6 @@
         dotool
         papirus-icon-theme
         zsh-autosuggestions
-        # lmstudio # removed for Hermes OpenCode setup
       ];
 
       documentation.doc.enable = false;
@@ -264,7 +242,6 @@
         modules = [
           inputs.nix-ai-setup.nixosModules.default
           { services.nix-ai-setup.enable = true; }
-          hermes-agent.nixosModules.default
           unity-on-nix.nixosModules.default
           ./modules/unity-desktop.nix
           ./modules/amdgpu.nix
@@ -272,10 +249,7 @@
           # ./modules/cosmic-theme.nix
           ./modules/plymouth-theme.nix
           ./modules/derriks-apps.nix
-          ./modules/durandal-hermes-skin.nix
           ./modules/gamemode.nix
-          ./modules/hermes-codex-profiles.nix
-          ./modules/hermes-runtime-compat.nix
           ./modules/steam.nix
           ./modules/tailscale-support.nix
           ./modules/unsecure-packages.nix
