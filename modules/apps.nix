@@ -14,5 +14,7 @@
     retroarch
   
     rpcs3
+  
+    qbittorrent
   ];
 }
