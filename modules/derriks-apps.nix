@@ -3,6 +3,15 @@
 {
   imports = [ ./fresh-theme.nix ];
 
+  # Fresh's onig_sys crate needs the system Oniguruma library during builds.
+  nixpkgs.overlays = [
+    (final: prev: {
+      fresh-editor = prev.fresh-editor.overrideAttrs (old: {
+        buildInputs = (old.buildInputs or [ ]) ++ [ final.oniguruma ];
+      });
+    })
+  ];
+
   # Add packages to the system environment
   environment.systemPackages = with pkgs; [
     bitwarden-desktop
