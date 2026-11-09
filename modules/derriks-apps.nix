@@ -15,7 +15,6 @@
     mpv
     python312
     btrfs-progs
-    appimage-run
     pkgs.kdePackages.partitionmanager
     papirus-icon-theme
     libreoffice-qt
@@ -34,7 +33,6 @@
     geany
     thunderbird
     ntfs3g
-    appimage-run
     flatpak
     discord
     kopia
