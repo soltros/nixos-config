@@ -6,29 +6,6 @@
   # Fresh's onig_sys crate needs the system Oniguruma library during builds.
   nixpkgs.overlays = [
     (final: prev: {
-      # Build the crate's matching AWS-LC source: nixpkgs' system package
-      # uses a different header layout and symbol namespace.
-      codex = prev.codex.overrideAttrs (old: {
-        # Required by cargoUseSystemLibs for zstd-sys, libsqlite3-sys,
-        # and onig_sys, including with older nixpkgs package definitions.
-        buildInputs = (old.buildInputs or [ ]) ++ [
-          final.zstd
-          final.sqlite
-          final.oniguruma
-        ];
-        env = builtins.removeAttrs (old.env or { }) [
-          "AWS_LC_SYS_SYSTEM_DIR"
-          "AWS_LC_SYS_SYSTEM_BINDINGS"
-        ] // {
-          AWS_LC_SYS_USE_SYSTEM = "0";
-        };
-        # cargoUseSystemLibs resets this to 1 during preConfigure.
-        # Override it after that hook, immediately before Cargo runs.
-        preBuild = (old.preBuild or "") + ''
-          export AWS_LC_SYS_USE_SYSTEM=0
-          unset AWS_LC_SYS_SYSTEM_DIR AWS_LC_SYS_SYSTEM_BINDINGS
-        '';
-      });
       fresh-editor = prev.fresh-editor.overrideAttrs (old: {
         buildInputs = (old.buildInputs or [ ]) ++ [ final.oniguruma ];
       });
