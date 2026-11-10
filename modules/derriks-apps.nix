@@ -9,6 +9,13 @@
       # Build the crate's matching AWS-LC source: nixpkgs' system package
       # uses a different header layout and symbol namespace.
       codex = prev.codex.overrideAttrs (old: {
+        # Required by cargoUseSystemLibs for zstd-sys, libsqlite3-sys,
+        # and onig_sys, including with older nixpkgs package definitions.
+        buildInputs = (old.buildInputs or [ ]) ++ [
+          final.zstd
+          final.sqlite
+          final.oniguruma
+        ];
         env = builtins.removeAttrs (old.env or { }) [
           "AWS_LC_SYS_SYSTEM_DIR"
           "AWS_LC_SYS_SYSTEM_BINDINGS"
