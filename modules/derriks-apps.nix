@@ -15,6 +15,12 @@
         ] // {
           AWS_LC_SYS_USE_SYSTEM = "0";
         };
+        # cargoUseSystemLibs resets this to 1 during preConfigure.
+        # Override it after that hook, immediately before Cargo runs.
+        preBuild = (old.preBuild or "") + ''
+          export AWS_LC_SYS_USE_SYSTEM=0
+          unset AWS_LC_SYS_SYSTEM_DIR AWS_LC_SYS_SYSTEM_BINDINGS
+        '';
       });
       fresh-editor = prev.fresh-editor.overrideAttrs (old: {
         buildInputs = (old.buildInputs or [ ]) ++ [ final.oniguruma ];
