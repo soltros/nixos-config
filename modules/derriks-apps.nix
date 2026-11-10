@@ -6,19 +6,14 @@
   # Fresh's onig_sys crate needs the system Oniguruma library during builds.
   nixpkgs.overlays = [
     (final: prev: {
-      # aws-lc-sys must use AWS-LC, not the separate OpenSSL dependency.
+      # Build the crate's matching AWS-LC source: nixpkgs' system package
+      # uses a different header layout and symbol namespace.
       codex = prev.codex.overrideAttrs (old: {
-        buildInputs = (old.buildInputs or [ ]) ++ [ final.aws-lc ];
-        env = (old.env or { }) // {
-          AWS_LC_SYS_USE_SYSTEM = "1";
-          # The crate expects include/ and lib/ under one prefix.
-          AWS_LC_SYS_SYSTEM_DIR = final.symlinkJoin {
-            name = "codex-aws-lc";
-            paths = [
-              (final.lib.getDev final.aws-lc)
-              (final.lib.getLib final.aws-lc)
-            ];
-          };
+        env = builtins.removeAttrs (old.env or { }) [
+          "AWS_LC_SYS_SYSTEM_DIR"
+          "AWS_LC_SYS_SYSTEM_BINDINGS"
+        ] // {
+          AWS_LC_SYS_USE_SYSTEM = "0";
         };
       });
       fresh-editor = prev.fresh-editor.overrideAttrs (old: {
