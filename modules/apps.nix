@@ -26,5 +26,7 @@ in
     codex
   
     soltros.lichii
+  
+    xemu
   ];
 }
