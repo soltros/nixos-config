@@ -13,7 +13,7 @@ in
   
     htop
   
-    brave
+    soltros.brave
     recomplauncher 
     openscad
   
@@ -28,5 +28,7 @@ in
     soltros.lichii
   
     xemu
+  
+    ghidra
   ];
 }
